@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_main_fragment_container_view_width">0dp</dimen>
+    <dimen name="activity_main_fragment_container_view_height">0dp</dimen>
+    <dimen name="fragment_home_recycler_view_width">0dp</dimen>
+    <dimen name="fragment_home_recycler_view_height">0dp</dimen>
+    <dimen name="fragment_home_item_card_view_width">0dp</dimen>
+    <dimen name="fragment_home_item_card_view_margin">4dp</dimen>
+    <dimen name="fragment_home_item_recycler_view_padding_start">12dp</dimen>
+    <dimen name="fragment_home_item_recycler_view_padding_top">12dp</dimen>
+    <dimen name="fragment_home_item_recycler_view_padding_end">12dp</dimen>
+    <dimen name="fragment_home_movie_item_title_padding_start">12dp</dimen>
+    <dimen name="fragment_home_movie_item_title_padding_top">12dp</dimen>
+    <dimen name="fragment_home_movie_item_title_padding_end">12dp</dimen>
+</resources>

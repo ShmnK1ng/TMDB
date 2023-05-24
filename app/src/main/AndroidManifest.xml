@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
-        android:icon="@drawable/the_movie_database_logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/TMDBSplashScreen">
         <activity
-            android:name=".TMDBMainActivity"
+            android:name=".MainActivity"
             android:theme="@style/TMDBSplashScreen"
             android:exported="true">
             <intent-filter>

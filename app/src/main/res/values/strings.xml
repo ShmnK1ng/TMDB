@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TheMovieDataBase</string>
+    <string name="hello_blank_fragment">Start</string>
+    <string name="category">Category</string>
+    <string name="fragment_home_movie_item_title">Title</string>
+    <string name="fragment_home_movie_item_rating">Rating</string>
 </resources>

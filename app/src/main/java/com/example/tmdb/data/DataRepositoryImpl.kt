@@ -1,6 +1,10 @@
 package com.example.tmdb.data
 
-class DataRepositoryImpl : DataRepository {
+import com.example.tmdb.data.model.Category
+import com.example.tmdb.data.model.Movie
+import javax.inject.Inject
+
+class DataRepositoryImpl @Inject constructor() : DataRepository {
 
     private val movie1 = Movie("title 1", 5.0)
     private val movie2 = Movie("title 2", 6.0)

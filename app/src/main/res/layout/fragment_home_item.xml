@@ -4,35 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/fragment_home_item_card_view_width"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_home_item_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/fragment_home_item_recycler_view_padding_start"
+        android:paddingTop="@dimen/fragment_home_item_recycler_view_padding_top"
+        android:paddingEnd="@dimen/fragment_home_item_recycler_view_padding_end"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_home_item_textview" />
+
+    <TextView
+        android:id="@+id/fragment_home_item_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fragment_home_item_card_view_margin"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/category"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <TextView
-            android:id="@+id/fragment_home_item_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_home_item_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/fragment_home_item_recycler_view_padding_start"
-            android:paddingTop="@dimen/fragment_home_item_recycler_view_padding_top"
-            android:paddingEnd="@dimen/fragment_home_item_recycler_view_padding_end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fragment_home_item_textview" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

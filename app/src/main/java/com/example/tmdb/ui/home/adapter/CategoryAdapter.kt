@@ -1,11 +1,12 @@
-package com.example.tmdb.ui.home
+package com.example.tmdb.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.tmdb.data.Category
+import com.example.tmdb.data.model.Category
 import com.example.tmdb.databinding.FragmentHomeItemBinding
-import com.example.tmdb.utils.CategoryDiffCallback
+import com.example.tmdb.ui.home.viewholder.CategoryViewHolder
+import com.example.tmdb.ui.home.utils.CategoryDiffCallback
 
 class CategoryAdapter :
     ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback()) {
@@ -16,7 +17,6 @@ class CategoryAdapter :
     ): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = FragmentHomeItemBinding.inflate(layoutInflater, parent, false)
-
         return CategoryViewHolder(binding)
     }
 

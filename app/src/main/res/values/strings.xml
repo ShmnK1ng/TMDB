@@ -4,4 +4,6 @@
     <string name="category">Category</string>
     <string name="fragment_home_movie_item_title">Title</string>
     <string name="fragment_home_movie_item_rating">Rating</string>
+    <string name="fragment_home_movie_item_image_view_content_description">movie poster</string>
+    <string name="fragment_home_movie_item_star_content_description">star rating</string>
 </resources>

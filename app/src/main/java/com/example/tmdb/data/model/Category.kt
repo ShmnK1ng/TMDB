@@ -1,4 +1,4 @@
-package com.example.tmdb.data
+package com.example.tmdb.data.model
 
 data class Category(
     val categoryName: String,

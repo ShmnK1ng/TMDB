@@ -2,17 +2,17 @@ package com.example.tmdb.di
 
 import com.example.tmdb.data.DataRepository
 import com.example.tmdb.data.DataRepositoryImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
-class DataModule {
+@InstallIn(SingletonComponent::class)
+abstract class DataModule {
 
-    @Provides
-    fun provideDataRepository() : DataRepository {
-        return DataRepositoryImpl()
-    }
+    @Binds
+    @Singleton
+    abstract fun bindDataRepository(dataRepository: DataRepositoryImpl) : DataRepository
 }

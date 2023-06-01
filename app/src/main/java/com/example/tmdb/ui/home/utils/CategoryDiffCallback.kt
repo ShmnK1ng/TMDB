@@ -1,7 +1,7 @@
-package com.example.tmdb.utils
+package com.example.tmdb.ui.home.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.tmdb.data.Category
+import com.example.tmdb.data.model.Category
 
 class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
 

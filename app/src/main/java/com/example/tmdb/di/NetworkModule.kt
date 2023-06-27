@@ -1,7 +1,8 @@
 package com.example.tmdb.di
 
-import com.example.tmdb.network.MovieApi
+import com.example.tmdb.ui.home.utils.AUTHORIZATION
 import com.example.tmdb.ui.home.utils.BASE_URL
+import com.example.tmdb.ui.home.utils.LANGUAGE
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -12,7 +13,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -25,10 +25,16 @@ class NetworkModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(interceptor)
+            .addInterceptor { chain ->
+                val url = chain.request().url.newBuilder()
+                    .addQueryParameter("language", LANGUAGE)
+                    .build()
+                val newRequest = chain.request().newBuilder().url(url)
+                    .addHeader("Authorization", AUTHORIZATION)
+                    .build()
+                chain.proceed(newRequest)
+            }
             .build()
     }
 
@@ -48,9 +54,4 @@ class NetworkModule {
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-
-    @Provides
-    @Singleton
-    internal fun provideMovieApi(retrofit: Retrofit): MovieApi =
-        retrofit.create(MovieApi::class.java)
 }

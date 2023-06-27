@@ -1,34 +1,55 @@
 package com.example.tmdb.data.repository
 
 import com.example.tmdb.data.model.Category
-import com.example.tmdb.network.MovieApi
-import com.example.tmdb.ui.home.utils.LANGUAGE
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.tmdb.data.model.Movie
+import com.example.tmdb.data.model.MovieDto
+import com.example.tmdb.data.model.SeriesDto
+import com.example.tmdb.network.CategoriesApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
-class CategoriesRepositoryImpl @Inject constructor(private val api: MovieApi) :
+class CategoriesRepositoryImpl @Inject constructor(private val api: CategoriesApi) :
     CategoriesRepository {
 
-    override suspend fun fetchTrendingMoviesCategory(): Category = withContext(Dispatchers.IO) {
-        val results = api.getTrendingMoviesList("movie", LANGUAGE).toMovieList()
-        Category("Trending movies", results )
+    override suspend fun getCategories(scope: CoroutineScope): List<Category> {
+        val trendingMovieList =
+            scope.async { api.getTrendingMoviesList().result.moviesDtoListToMovieList() }
+        val trendingSeriesList =
+            scope.async { api.getTrendingSeriesList().result.seriesDtoListToMovieList() }
+        val upcomingMoviesList =
+            scope.async { api.getUpcomingMoviesList(1).result.moviesDtoListToMovieList() }
+        val upcomingSeriesList =
+            scope.async { api.getUpcomingSeriesList(1).result.seriesDtoListToMovieList() }
+        return mutableListOf(
+            Category("Trending movies", trendingMovieList.await()),
+            Category("Trending series", trendingSeriesList.await()),
+            Category("Upcoming movies", upcomingMoviesList.await()),
+            Category("Upcoming series", upcomingSeriesList.await())
+        ).toList()
     }
 
-    override suspend fun fetchTrendingSeriesCategory(): Category = withContext(Dispatchers.IO) {
-        val results = api.getTrendingSeriesList("tv", LANGUAGE).toMovieList()
-        Category("Trending series", results )
+    private fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
+        val movieList: MutableList<Movie> = mutableListOf()
+        this.map {
+            movieList.add(
+                Movie(
+                    id = it.id, title = it.title, rating = it.rating, posterPath = it.posterPath
+                )
+            )
+        }
+        return movieList.toList()
     }
 
-    override suspend fun fetchUpcomingMoviesCategories(): Category =
-        withContext(Dispatchers.IO) {
-            val results = api.getUpcomingMoviesList(LANGUAGE, 1).toMovieList()
-            Category("Upcoming movies", results)
+    private fun List<SeriesDto>.seriesDtoListToMovieList(): List<Movie> {
+        val movieList: MutableList<Movie> = mutableListOf()
+        this.map {
+            movieList.add(
+                Movie(
+                    id = it.id, title = it.name, rating = it.rating, posterPath = it.posterPath
+                )
+            )
         }
-
-    override suspend fun fetchUpcomingSeriesCategories(): Category =
-        withContext(Dispatchers.IO) {
-            val results = api.getUpcomingSeriesList(LANGUAGE, 1).toMovieList()
-            Category("Upcoming series", results)
-        }
+        return movieList.toList()
+    }
 }

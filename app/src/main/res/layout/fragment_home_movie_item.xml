@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_home_movie_item_card_view"
         android:layout_marginTop="8dp"
-        android:layout_width="170dp"
-        android:layout_height="254dp"
+        android:layout_width="136dp"
+        android:layout_height="224dp"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         app:cardCornerRadius="10dp"
@@ -20,6 +20,7 @@
             android:id="@+id/fragment_home_movie_item_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/fragment_home_movie_item_image_view_content_description" />
 
         <androidx.cardview.widget.CardView
@@ -63,7 +64,7 @@
     <TextView
         android:id="@+id/fragment_home_movie_item_title"
         android:layout_width="wrap_content"
-        android:maxWidth="172dp"
+        android:maxWidth="135dp"
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:text="@string/fragment_home_movie_item_title"

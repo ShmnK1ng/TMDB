@@ -1,9 +1,6 @@
 package com.example.tmdb.data.repository
 
-import com.example.tmdb.data.model.Category
-import com.example.tmdb.data.model.Movie
-import com.example.tmdb.data.model.MovieDto
-import com.example.tmdb.data.model.SeriesDto
+import com.example.tmdb.data.model.*
 import com.example.tmdb.network.CategoriesApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -22,10 +19,10 @@ class CategoriesRepositoryImpl @Inject constructor(private val api: CategoriesAp
         val upcomingSeriesList =
             scope.async { api.getUpcomingSeriesList(1).result.seriesDtoListToMovieList() }
         return mutableListOf(
-            Category("Trending movies", trendingMovieList.await()),
-            Category("Trending series", trendingSeriesList.await()),
-            Category("Upcoming movies", upcomingMoviesList.await()),
-            Category("Upcoming series", upcomingSeriesList.await())
+            Category(CategoryName.TrendingMovies.value, trendingMovieList.await()),
+            Category(CategoryName.TrendingSeries.value, trendingSeriesList.await()),
+            Category(CategoryName.UpcomingMovies.value, upcomingMoviesList.await()),
+            Category(CategoryName.UpcomingSeries.value, upcomingSeriesList.await())
         ).toList()
     }
 

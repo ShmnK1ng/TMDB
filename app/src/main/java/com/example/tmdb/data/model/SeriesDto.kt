@@ -2,7 +2,7 @@ package com.example.tmdb.data.model
 
 import com.squareup.moshi.Json
 
-class SeriesDto(
+data class SeriesDto(
     @Json(name = "id")
     val id: String,
     @Json(name = "name")

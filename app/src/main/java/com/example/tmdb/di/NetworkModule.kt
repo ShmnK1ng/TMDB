@@ -1,8 +1,6 @@
 package com.example.tmdb.di
 
-import com.example.tmdb.ui.home.utils.AUTHORIZATION
-import com.example.tmdb.ui.home.utils.BASE_URL
-import com.example.tmdb.ui.home.utils.LANGUAGE
+import com.example.tmdb.ui.home.utils.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -28,10 +26,10 @@ class NetworkModule {
             .addInterceptor(interceptor)
             .addInterceptor { chain ->
                 val url = chain.request().url.newBuilder()
-                    .addQueryParameter("language", LANGUAGE)
+                    .addQueryParameter(QUERY_PARAMETER_NAME_LANGUAGE, QUERY_PARAMETER_LANGUAGE_VALUE)
                     .build()
                 val newRequest = chain.request().newBuilder().url(url)
-                    .addHeader("Authorization", AUTHORIZATION)
+                    .addHeader(HEADER_NAME_AUTHORIZATION, HEADER_AUTORIZATION_VALUE)
                     .build()
                 chain.proceed(newRequest)
             }

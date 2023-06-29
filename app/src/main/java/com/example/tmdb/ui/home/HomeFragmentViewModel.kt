@@ -21,7 +21,7 @@ class HomeFragmentViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _categories.value = getCategoriesUseCase.getCategories(this)
+            _categories.value = getCategoriesUseCase.getCategories()
         }
     }
 }

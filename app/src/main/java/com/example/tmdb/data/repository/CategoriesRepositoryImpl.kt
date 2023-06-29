@@ -1,32 +1,35 @@
 package com.example.tmdb.data.repository
 
-import com.example.tmdb.data.model.*
+import com.example.tmdb.data.model.Category
+import com.example.tmdb.data.model.CategoryName
+import com.example.tmdb.data.model.moviesDtoListToMovieList
+import com.example.tmdb.data.model.seriesDtoListToMovieList
 import com.example.tmdb.network.CategoriesApi
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class CategoriesRepositoryImpl @Inject constructor(private val api: CategoriesApi) :
     CategoriesRepository {
 
-    override suspend fun getCategories(scope: CoroutineScope): List<Category> {
+    override suspend fun getCategories(): List<Category> = coroutineScope {
         val trendingMovieList =
-            scope.async { api.getTrendingMoviesList().result.moviesDtoListToMovieList() }
+            async { api.getTrendingMoviesList().result.moviesDtoListToMovieList() }
         val trendingSeriesList =
-            scope.async { api.getTrendingSeriesList().result.seriesDtoListToMovieList() }
+            async { api.getTrendingSeriesList().result.seriesDtoListToMovieList() }
         val upcomingMoviesList =
-            scope.async { api.getUpcomingMoviesList(1).result.moviesDtoListToMovieList() }
+            async { api.getUpcomingMoviesList(1).result.moviesDtoListToMovieList() }
         val upcomingSeriesList =
-            scope.async { api.getUpcomingSeriesList(1).result.seriesDtoListToMovieList() }
-        return mutableListOf(
+            async { api.getUpcomingSeriesList(1).result.seriesDtoListToMovieList() }
+        listOf(
             Category(CategoryName.TrendingMovies.value, trendingMovieList.await()),
             Category(CategoryName.TrendingSeries.value, trendingSeriesList.await()),
             Category(CategoryName.UpcomingMovies.value, upcomingMoviesList.await()),
             Category(CategoryName.UpcomingSeries.value, upcomingSeriesList.await())
-        ).toList()
+        )
     }
 }
 
 interface CategoriesRepository {
-    suspend fun getCategories(scope: CoroutineScope): List<Category>
+    suspend fun getCategories(): List<Category>
 }

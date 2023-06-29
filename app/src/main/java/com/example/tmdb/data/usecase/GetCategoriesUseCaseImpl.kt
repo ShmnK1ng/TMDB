@@ -10,3 +10,7 @@ class GetCategoriesUseCaseImpl @Inject constructor(private val repository: Categ
         return repository.getCategories(scope)
     }
 }
+
+interface GetCategoriesUseCase {
+    suspend fun getCategories(scope: CoroutineScope): List<Category>
+}

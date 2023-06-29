@@ -26,3 +26,7 @@ class CategoriesRepositoryImpl @Inject constructor(private val api: CategoriesAp
         ).toList()
     }
 }
+
+interface CategoriesRepository {
+    suspend fun getCategories(scope: CoroutineScope): List<Category>
+}

@@ -1,5 +1,6 @@
 package com.example.tmdb.di
 
+import com.example.tmdb.data.model.RequestsInterceptor
 import com.example.tmdb.ui.home.utils.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -24,15 +25,7 @@ class NetworkModule {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor { chain ->
-                val url = chain.request().url.newBuilder()
-                    .addQueryParameter(QUERY_PARAMETER_NAME_LANGUAGE, QUERY_PARAMETER_LANGUAGE_VALUE)
-                    .build()
-                val newRequest = chain.request().newBuilder().url(url)
-                    .addHeader(HEADER_NAME_AUTHORIZATION, HEADER_AUTORIZATION_VALUE)
-                    .build()
-                chain.proceed(newRequest)
-            }
+            .addInterceptor(RequestsInterceptor())
             .build()
     }
 

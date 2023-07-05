@@ -1,5 +1,6 @@
 package com.example.tmdb.di
 
+import com.example.tmdb.data.model.BASE_URL
 import com.example.tmdb.data.model.RequestsInterceptor
 import com.example.tmdb.ui.home.utils.*
 import com.squareup.moshi.Moshi

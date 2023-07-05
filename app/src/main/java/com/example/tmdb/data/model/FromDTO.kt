@@ -3,7 +3,7 @@ package com.example.tmdb.data.model
 fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
     return this.map {
         Movie(
-            id = it.id, title = it.title, rating = it.rating, posterPath = it.posterPath
+            id = it.id, title = it.title, rating = it.rating, posterPath = IMAGE_BASE_PATH + it.posterPath
         )
     }
 }
@@ -11,7 +11,7 @@ fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
 fun List<SeriesDto>.seriesDtoListToMovieList(): List<Movie> {
     return this.map {
         Movie(
-            id = it.id, title = it.name, rating = it.rating, posterPath = it.posterPath
+            id = it.id, title = it.name, rating = it.rating, posterPath = IMAGE_BASE_PATH + it.posterPath
         )
     }
 }

@@ -11,15 +11,16 @@
         android:paddingStart="@dimen/fragment_home_item_recycler_view_padding_start"
         android:paddingTop="@dimen/fragment_home_item_recycler_view_padding_top"
         android:paddingEnd="@dimen/fragment_home_item_recycler_view_padding_end"
+        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@+id/fragment_home_item_textview" />
 
     <TextView
         android:id="@+id/fragment_home_item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:textSize="@dimen/fragment_home_item_textview_text_size"
+        android:layout_marginStart="@dimen/fragment_home_item_textview_margin_start"
+        android:layout_marginTop="@dimen/fragment_home_item_textview_margin_top"
         android:text="@string/category"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

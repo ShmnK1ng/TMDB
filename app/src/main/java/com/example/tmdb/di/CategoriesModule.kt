@@ -19,11 +19,10 @@ abstract class CategoriesModule {
 
     @Binds
     @Singleton
-    abstract fun provideCategoryRepository(repository: CategoriesRepositoryImpl) : CategoriesRepository
+    abstract fun bindCategoryRepository(repository: CategoriesRepositoryImpl): CategoriesRepository
 
     @Binds
-    @Singleton
-    abstract fun provideMovieListSource(movieListSource: GetCategoriesUseCaseImpl) : GetCategoriesUseCase
+    abstract fun bindMovieListSource(movieListSource: GetCategoriesUseCaseImpl): GetCategoriesUseCase
 }
 
 @Module

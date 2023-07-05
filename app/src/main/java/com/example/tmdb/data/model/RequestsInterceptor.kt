@@ -1,9 +1,5 @@
 package com.example.tmdb.data.model
 
-import com.example.tmdb.ui.home.utils.HEADER_AUTORIZATION_VALUE
-import com.example.tmdb.ui.home.utils.HEADER_NAME_AUTHORIZATION
-import com.example.tmdb.ui.home.utils.QUERY_PARAMETER_LANGUAGE_VALUE
-import com.example.tmdb.ui.home.utils.QUERY_PARAMETER_NAME_LANGUAGE
 import okhttp3.Interceptor
 
 class RequestsInterceptor : Interceptor {
@@ -19,7 +15,7 @@ class RequestsInterceptor : Interceptor {
                         )
                         .build()
                 )
-                .addHeader(HEADER_NAME_AUTHORIZATION, HEADER_AUTORIZATION_VALUE)
+                .addHeader(HEADER_NAME_AUTHORIZATION, HEADER_AUTHORIZATION_VALUE)
                 .build()
         )
     }

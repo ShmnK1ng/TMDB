@@ -7,7 +7,9 @@ import com.example.tmdb.data.model.FRAGMENT_HOME_ITEM_SPAN_COUNT
 import com.example.tmdb.databinding.FragmentHomeItemBinding
 import com.example.tmdb.ui.home.adapter.MovieItemAdapter
 
-class CategoryViewHolder(private val binding: FragmentHomeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class CategoryViewHolder(
+    private val binding: FragmentHomeItemBinding,
+) : RecyclerView.ViewHolder(binding.root) {
 
     private val movieItemAdapter = MovieItemAdapter()
 
@@ -18,7 +20,7 @@ class CategoryViewHolder(private val binding: FragmentHomeItemBinding) : Recycle
     }
 
     fun bind(category: Category) {
-        binding.fragmentHomeItemTextview.text = category.categoryName
+        binding.fragmentHomeItemTextview.text = binding.fragmentHomeItemTextview.context.getString(category.categoryNameId)
         movieItemAdapter.submitList(category.movieList)
     }
 }

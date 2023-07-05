@@ -1,8 +1,10 @@
 package com.example.tmdb.data.model
 
-sealed class CategoryName(val value: String) {
-    object TrendingMovies : CategoryName("Trending movies")
-    object TrendingSeries : CategoryName("Trending series")
-    object UpcomingMovies : CategoryName("Upcoming movies")
-    object UpcomingSeries : CategoryName("Upcoming series")
+import com.example.tmdb.R
+
+sealed class CategoryName(val nameId: Int) {
+    object TrendingMovies : CategoryName(R.string.category_name_trending_movies)
+    object TrendingSeries : CategoryName(R.string.category_name_trending_series)
+    object UpcomingMovies : CategoryName(R.string.category_name_upcoming_movies)
+    object UpcomingSeries : CategoryName(R.string.category_name_upcoming_series)
 }

@@ -22,7 +22,7 @@ abstract class CategoriesModule {
     abstract fun bindCategoryRepository(repository: CategoriesRepositoryImpl): CategoriesRepository
 
     @Binds
-    abstract fun bindMovieListSource(movieListSource: GetCategoriesUseCaseImpl): GetCategoriesUseCase
+    abstract fun bindGetCategoriesUseCase(movieListSource: GetCategoriesUseCaseImpl): GetCategoriesUseCase
 }
 
 @Module

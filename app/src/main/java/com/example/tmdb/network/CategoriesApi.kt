@@ -8,20 +8,18 @@ import retrofit2.http.Query
 interface CategoriesApi {
 
     @GET("trending/movie/week")
-    suspend fun getTrendingMoviesList(
-    ) : MovieResultsDto
+    suspend fun getTrendingMoviesList(): MovieResultsDto
 
     @GET("trending/tv/week")
-    suspend fun getTrendingSeriesList(
-    ) : SeriesResultsDto
+    suspend fun getTrendingSeriesList(): SeriesResultsDto
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMoviesList(
         @Query("page") page: Int
-    ) : MovieResultsDto
+    ): MovieResultsDto
 
     @GET("tv/on_the_air")
     suspend fun getUpcomingSeriesList(
         @Query("page") page: Int
-    ) : SeriesResultsDto
+    ): SeriesResultsDto
 }

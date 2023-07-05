@@ -6,4 +6,8 @@
     <string name="fragment_home_movie_item_rating">Rating</string>
     <string name="fragment_home_movie_item_image_view_content_description">movie poster</string>
     <string name="fragment_home_movie_item_star_content_description">star rating</string>
+    <string name="category_name_trending_movies">Trending movies</string>
+    <string name="category_name_trending_series">Trending series</string>
+    <string name="category_name_upcoming_movies">Upcoming movies</string>
+    <string name="category_name_upcoming_series">Upcoming series</string>
 </resources>

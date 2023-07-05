@@ -22,10 +22,10 @@ class CategoriesRepositoryImpl @Inject constructor(private val api: CategoriesAp
         val upcomingSeriesList =
             async { api.getUpcomingSeriesList(1).result.seriesDtoListToMovieList() }
         listOf(
-            Category(CategoryName.TrendingMovies.value, trendingMovieList.await()),
-            Category(CategoryName.TrendingSeries.value, trendingSeriesList.await()),
-            Category(CategoryName.UpcomingMovies.value, upcomingMoviesList.await()),
-            Category(CategoryName.UpcomingSeries.value, upcomingSeriesList.await())
+            Category(CategoryName.TrendingMovies.nameId, trendingMovieList.await()),
+            Category(CategoryName.TrendingSeries.nameId, trendingSeriesList.await()),
+            Category(CategoryName.UpcomingMovies.nameId, upcomingMoviesList.await()),
+            Category(CategoryName.UpcomingSeries.nameId, upcomingSeriesList.await())
         )
     }
 }

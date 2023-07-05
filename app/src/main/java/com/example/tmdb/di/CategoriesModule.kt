@@ -31,6 +31,6 @@ class CategoriesApiModule {
 
     @Provides
     @Singleton
-    internal fun provideCategoriesApi(retrofit: Retrofit): CategoriesApi =
+    fun provideCategoriesApi(retrofit: Retrofit): CategoriesApi =
         retrofit.create(CategoriesApi::class.java)
 }

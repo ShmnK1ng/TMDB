@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tmdb.data.model.FRAGMENT_HOME_SPAN_COUNT
 import com.example.tmdb.databinding.FragmentHomeBinding
 import com.example.tmdb.ui.home.adapter.CategoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +36,7 @@ class HomeFragment : Fragment() {
         val categoryAdapter = CategoryAdapter()
         binding.fragmentHomeRecyclerView.adapter = categoryAdapter
         binding.fragmentHomeRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+            StaggeredGridLayoutManager(FRAGMENT_HOME_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
         viewModel.categories.flowWithLifecycle(
             viewLifecycleOwner.lifecycle,
             Lifecycle.State.STARTED

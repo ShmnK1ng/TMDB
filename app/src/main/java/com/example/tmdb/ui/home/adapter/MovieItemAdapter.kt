@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.databinding.FragmentHomeMovieItemBinding
-import com.example.tmdb.ui.home.viewholder.MovieItemViewHolder
 import com.example.tmdb.ui.home.utils.MovieItemDiffCallback
+import com.example.tmdb.ui.home.viewholder.MovieItemViewHolder
 
 class MovieItemAdapter:
     ListAdapter<Movie, MovieItemViewHolder>(MovieItemDiffCallback()) {

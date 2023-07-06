@@ -6,12 +6,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/fragment_home_movie_item_card_view"
-        android:layout_marginTop="8dp"
-        android:layout_width="68dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        app:cardCornerRadius="10dp"
+        android:layout_marginTop="@dimen/fragment_home_movie_item_card_view_margin_top"
+        android:layout_width="@dimen/fragment_home_movie_item_card_view_width"
+        android:layout_height="@dimen/fragment_home_movie_item_card_view_height"
+        android:layout_marginStart="@dimen/fragment_home_movie_item_card_view_margin_start"
+        android:layout_marginEnd="@dimen/fragment_home_movie_item_card_view_margin_end"
+        app:cardCornerRadius="@dimen/fragment_home_movie_item_card_view_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,13 +20,14 @@
             android:id="@+id/fragment_home_movie_item_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/fragment_home_movie_item_image_view_content_description" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardBackgroundColor="#36343b">
+            app:cardCornerRadius="@dimen/fragment_home_movie_item_rating_card_view_corner_radius"
+            app:cardBackgroundColor="@color/fragment_home_movie_item_rating_card_view_background_color">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -36,8 +37,8 @@
                     android:id="@+id/fragment_home_movie_item_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:paddingStart="3dp"
+                    android:layout_marginTop="@dimen/fragment_home_movie_item_star_margin_top"
+                    android:paddingStart="@dimen/fragment_home_movie_item_star_padding_start"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -49,8 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fragment_home_movie_item_rating"
-                    android:textSize="12sp"
-                    android:paddingEnd="5dp"
+                    android:textSize="@dimen/fragment_home_movie_item_rating_text_size"
+                    android:paddingEnd="@dimen/fragment_home_movie_item_rating_padding_end"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toEndOf="@+id/fragment_home_movie_item_star"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -63,9 +64,12 @@
     <TextView
         android:id="@+id/fragment_home_movie_item_title"
         android:layout_width="wrap_content"
+        android:maxWidth="@dimen/fragment_home_movie_item_title_width"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="@dimen/fragment_home_movie_item_title_text_size"
         android:text="@string/fragment_home_movie_item_title"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_home_movie_item_card_view" />

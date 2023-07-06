@@ -1,23 +1,27 @@
 package com.example.tmdb.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.tmdb.data.DataRepository
+import androidx.lifecycle.viewModelScope
 import com.example.tmdb.data.model.Category
+import com.example.tmdb.data.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
-    dataRepository: DataRepository
+    getCategoriesUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
     private val _categories: MutableStateFlow<List<Category>> = MutableStateFlow(listOf())
     val categories: Flow<List<Category>> = _categories.asStateFlow()
 
     init {
-        _categories.value = dataRepository.getCategories()
+        viewModelScope.launch {
+            _categories.value = getCategoriesUseCase.getCategories()
+        }
     }
 }

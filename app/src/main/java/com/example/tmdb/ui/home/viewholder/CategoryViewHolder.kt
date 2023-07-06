@@ -20,7 +20,7 @@ class CategoryViewHolder(
     }
 
     fun bind(category: Category) {
-        binding.fragmentHomeItemTextview.text = binding.fragmentHomeItemTextview.context.getString(category.categoryNameId)
+        binding.fragmentHomeItemTextview.text = binding.fragmentHomeItemTextview.context.getString(category.categoryName.nameId)
         movieItemAdapter.submitList(category.movieList)
     }
 }

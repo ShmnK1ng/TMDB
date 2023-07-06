@@ -1,6 +1,6 @@
 package com.example.tmdb.data.model
 
 data class Category(
-    val categoryNameId: Int,
+    val categoryName: CategoryName,
     val movieList: List<Movie>
 )

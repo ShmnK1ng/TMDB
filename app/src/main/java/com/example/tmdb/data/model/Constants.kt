@@ -11,3 +11,4 @@ const val HEADER_NAME_AUTHORIZATION = "Authorization"
 const val ROUNDING_PARAMETER = "%.1f"
 const val FRAGMENT_HOME_SPAN_COUNT = 1
 const val FRAGMENT_HOME_ITEM_SPAN_COUNT = 1
+const val DATABASE_NAME = "appDatabase.db"

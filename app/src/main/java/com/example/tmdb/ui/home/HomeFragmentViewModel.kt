@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
-    getCategoriesUseCase: GetCategoriesUseCase
+    getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
 
     private val _categories: MutableStateFlow<List<Category>> = MutableStateFlow(listOf())

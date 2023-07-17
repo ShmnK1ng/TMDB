@@ -22,6 +22,6 @@ data class MovieEntity(
     val id: String,
     val title: String,
     val rating: Double,
-    @ColumnInfo(name = "poster_key")
+    @ColumnInfo(name = "poster_path")
     val posterPath: String
 )

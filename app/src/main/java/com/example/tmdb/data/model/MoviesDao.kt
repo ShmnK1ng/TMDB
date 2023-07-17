@@ -7,5 +7,5 @@ import androidx.room.Insert
 interface MoviesDao {
 
     @Insert
-    suspend fun setMovie(movieEntity: MovieEntity)
+    suspend fun saveMovie(movieEntity: MovieEntity)
 }

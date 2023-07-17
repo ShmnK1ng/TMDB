@@ -12,17 +12,16 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ],
-    indices = [
-        Index("category_id")
     ]
 )
 
 data class MovieEntity(
-    @ColumnInfo(name = "category_id") val categoryId: Int,
-    @PrimaryKey val id: String,
+    @ColumnInfo(name = "category_id")
+    val categoryId: Int,
+    @PrimaryKey
+    val id: String,
     val title: String,
     val rating: Double,
-    @ColumnInfo(name = "poster_key") val posterPath: String
-) {
-}
+    @ColumnInfo(name = "poster_key")
+    val posterPath: String
+)

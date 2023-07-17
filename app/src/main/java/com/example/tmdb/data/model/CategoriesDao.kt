@@ -7,5 +7,5 @@ import androidx.room.Insert
 interface CategoriesDao {
 
     @Insert
-    suspend fun setCategory(categoryEntity: CategoryEntity)
+    suspend fun saveCategory(categoryEntity: CategoryEntity)
 }

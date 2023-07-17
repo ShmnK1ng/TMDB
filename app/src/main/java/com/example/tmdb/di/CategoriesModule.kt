@@ -4,8 +4,6 @@ import com.example.tmdb.data.repository.CategoriesRepository
 import com.example.tmdb.data.repository.CategoriesRepositoryImpl
 import com.example.tmdb.data.usecase.GetCategoriesUseCase
 import com.example.tmdb.data.usecase.GetCategoriesUseCaseImpl
-import com.example.tmdb.data.usecase.SetCategoriesUseCase
-import com.example.tmdb.data.usecase.SetCategoriesUseCaseImpl
 import com.example.tmdb.network.CategoriesApi
 import dagger.Binds
 import dagger.Module
@@ -25,9 +23,6 @@ abstract class CategoriesModule {
 
     @Binds
     abstract fun bindGetCategoriesUseCase(movieListSource: GetCategoriesUseCaseImpl): GetCategoriesUseCase
-
-    @Binds
-    abstract fun bindSetCategoriesUseCase(movieListSource: SetCategoriesUseCaseImpl): SetCategoriesUseCase
 }
 
 @Module

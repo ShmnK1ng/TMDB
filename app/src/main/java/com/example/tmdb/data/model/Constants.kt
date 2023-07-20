@@ -12,3 +12,7 @@ const val ROUNDING_PARAMETER = "%.1f"
 const val FRAGMENT_HOME_SPAN_COUNT = 1
 const val FRAGMENT_HOME_ITEM_SPAN_COUNT = 1
 const val DATABASE_NAME = "appDatabase.db"
+const val TRENDING_MOVIES_ID = 1
+const val TRENDING_SERIES_ID = 2
+const val UPCOMING_MOVIES_ID = 3
+const val UPCOMING_SERIES_ID = 4

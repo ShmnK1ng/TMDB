@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
     tableName = "categories",
 )
 data class CategoryEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     @ColumnInfo(name = "category_name")
-    val categoryName: String,
+    val categoryName: Int,
 )

@@ -2,16 +2,14 @@ package com.example.tmdb.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.tmdb.data.model.CategoriesDao
-import com.example.tmdb.data.model.CategoryEntity
-import com.example.tmdb.data.model.MovieEntity
-import com.example.tmdb.data.model.MoviesDao
+import com.example.tmdb.data.model.*
 
 @Database(
     version = 1,
     entities = [
         CategoryEntity::class,
-        MovieEntity::class
+        MovieEntity::class,
+        CategoryAndMoviesDependenciesEntity::class
     ]
 )
 abstract class AppDatabase : RoomDatabase() {

@@ -1,7 +1,5 @@
 package com.example.tmdb.data.model
 
-import java.util.UUID
-
 fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
     return this.map {
         Movie(
@@ -24,14 +22,22 @@ fun List<SeriesDto>.seriesDtoListToMovieList(): List<Movie> {
     }
 }
 
-fun Category.toMovieEntityList(): List<MovieEntity> {
-    return this.movieList.map { movie ->
+fun Category.toMovieEntityList(): List<MovieEntity>? {
+    return this.movieList?.map { movie ->
         MovieEntity(
-            id = UUID.randomUUID().toString(),
-            movieId = movie.id,
+            id = movie.id,
             title = movie.title,
             rating = movie.rating,
             posterPath = movie.posterPath
+        )
+    }
+}
+
+fun List<CategoryEntity>.toCategoryNamesList(): List<CategoryName> {
+    return this.map {
+        CategoryName(
+            name = it.categoryName,
+            id = it.id,
         )
     }
 }

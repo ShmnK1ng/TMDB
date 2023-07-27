@@ -22,7 +22,9 @@ class DatabaseModule {
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(
             context, AppDatabase::class.java, DATABASE_NAME
-        ).build()
+        )
+            .createFromAsset("init_database.db")
+            .build()
 
     @Provides
     fun provideCategoriesDao(appDatabase: AppDatabase): CategoriesDao {

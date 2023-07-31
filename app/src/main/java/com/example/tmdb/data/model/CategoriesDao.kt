@@ -1,11 +1,11 @@
 package com.example.tmdb.data.model
 
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 
 @Dao
 interface CategoriesDao {
 
-    @Insert
-    suspend fun saveCategory(categoryEntity: CategoryEntity)
+    @Transaction
+    @Query("SELECT * FROM categories")
+    suspend fun getAllCategoryNames(): List<CategoryEntity>
 }

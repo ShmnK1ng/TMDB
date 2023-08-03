@@ -1,9 +1,6 @@
 package com.example.tmdb.data.model
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Transaction
+import androidx.room.*
 
 @Dao
 abstract class MoviesDao {
@@ -21,4 +18,7 @@ abstract class MoviesDao {
             saveCategoryAndMovieDependency(CategoryAndMoviesDependenciesEntity(categoryId, movieEntity.id))
         }
     }
+
+    @Query("DELETE FROM movies")
+    abstract suspend fun deleteOldMovies()
 }

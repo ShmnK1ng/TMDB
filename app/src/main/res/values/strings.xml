@@ -10,4 +10,5 @@
     <string name="category_name_trending_series">Trending series</string>
     <string name="category_name_upcoming_movies">Upcoming movies</string>
     <string name="category_name_upcoming_series">Upcoming series</string>
+    <string name="init_database">init_database.db</string>
 </resources>

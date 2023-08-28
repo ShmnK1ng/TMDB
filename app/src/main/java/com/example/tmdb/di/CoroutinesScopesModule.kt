@@ -1,12 +1,11 @@
 package com.example.tmdb.di
 
+import com.example.tmdb.App
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module
@@ -16,6 +15,6 @@ class CoroutinesScopesModule {
     @Singleton
     @Provides
     fun providesCoroutineScope(): CoroutineScope {
-        return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        return App.applicationScope
     }
 }

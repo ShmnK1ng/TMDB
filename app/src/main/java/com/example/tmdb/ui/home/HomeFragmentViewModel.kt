@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +17,10 @@ class HomeFragmentViewModel @Inject constructor(
     val categories: Flow<List<Category>> = _categories.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            _categories.value = getCategoriesUseCase.getCategories()
-        }
+        getCategoriesUseCase.getCategories()
+            .onEach { categories ->
+                _categories.value = categories
+            }
+            .launchIn(viewModelScope)
     }
 }

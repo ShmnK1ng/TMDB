@@ -41,3 +41,21 @@ fun List<CategoryEntity>.toCategoryNamesList(): List<CategoryName> {
         )
     }
 }
+
+fun List<MovieEntity>.toMovieList(): List<Movie> {
+    return this.map { movieEntity ->
+        Movie(
+            id = movieEntity.id,
+            title = movieEntity.title,
+            rating = movieEntity.rating,
+            posterPath = movieEntity.posterPath
+        )
+    }
+}
+
+fun CategoryEntity.toCategoryName(): CategoryName {
+    return CategoryName(
+        name = this.categoryName,
+        id = this.id
+    )
+}

@@ -2,6 +2,7 @@ package com.example.tmdb.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.tmdb.R
 import com.example.tmdb.data.AppDatabase
 import com.example.tmdb.data.model.CategoriesDao
 import com.example.tmdb.data.model.DATABASE_NAME
@@ -23,7 +24,7 @@ class DatabaseModule {
         Room.databaseBuilder(
             context, AppDatabase::class.java, DATABASE_NAME
         )
-            .createFromAsset("init_database.db")
+            .createFromAsset(context.getString(R.string.init_database))
             .build()
 
     @Provides

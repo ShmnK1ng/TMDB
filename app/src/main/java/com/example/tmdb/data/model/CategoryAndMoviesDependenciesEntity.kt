@@ -1,8 +1,6 @@
 package com.example.tmdb.data.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 
 @Entity(
     tableName = "categories_movies",
@@ -29,4 +27,19 @@ data class CategoryAndMoviesDependenciesEntity(
     val categoryId: Int,
     @ColumnInfo(name = "movie_id", index = true)
     val movieId: String
+)
+
+data class CategoryAndMovies(
+    @Embedded
+    val categoryEntity: CategoryEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "id",
+        associateBy = Junction(
+            value = CategoryAndMoviesDependenciesEntity::class,
+            parentColumn = "category_id",
+            entityColumn = "movie_id"
+        )
+    )
+    val moviesEntity: List<MovieEntity>
 )

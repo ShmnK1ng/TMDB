@@ -15,7 +15,7 @@ class CategoriesRepositoryImpl @Inject constructor(
 ) : CategoriesRepository {
     private var previousJob: Job? = null
 
-    override suspend fun getCategories(): Flow<List<Category>> {
+    override fun getCategories(): Flow<List<Category>> {
         if (previousJob?.isActive == false || previousJob == null) {
             previousJob?.cancel()
             previousJob =  coroutineScope.launch { updateCategoriesDB() }
@@ -61,5 +61,5 @@ class CategoriesRepositoryImpl @Inject constructor(
 }
 
 interface CategoriesRepository {
-    suspend fun getCategories(): Flow<List<Category>>
+    fun getCategories(): Flow<List<Category>>
 }

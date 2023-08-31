@@ -6,11 +6,11 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetCategoriesUseCaseImpl @Inject constructor(private val repository: CategoriesRepository) : GetCategoriesUseCase {
-    override suspend fun getCategories(): Flow<List<Category>> {
+    override fun getCategories(): Flow<List<Category>> {
         return repository.getCategories()
     }
 }
 
 interface GetCategoriesUseCase {
-    suspend fun getCategories(): Flow<List<Category>>
+    fun getCategories(): Flow<List<Category>>
 }

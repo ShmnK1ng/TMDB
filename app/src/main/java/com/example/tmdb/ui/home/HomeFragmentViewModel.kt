@@ -17,10 +17,10 @@ class HomeFragmentViewModel @Inject constructor(
     val categories: Flow<List<Category>> = _categories.asStateFlow()
 
     init {
-            getCategoriesUseCase.getCategories()
-                .onEach { categories ->
-                        _categories.value = categories
-                }
-                .launchIn(viewModelScope)
-        }
+        getCategoriesUseCase.getCategories()
+            .onEach { categories ->
+                _categories.value = categories
+            }
+            .launchIn(viewModelScope)
+    }
 }

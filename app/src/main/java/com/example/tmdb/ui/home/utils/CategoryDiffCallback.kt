@@ -6,7 +6,7 @@ import com.example.tmdb.data.model.Category
 class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
 
     override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-        return oldItem.categoryName == newItem.categoryName
+        return oldItem.categoryName.id == newItem.categoryName.id
     }
 
     override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {

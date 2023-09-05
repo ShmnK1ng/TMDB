@@ -41,11 +41,7 @@ class CategoriesRepositoryImpl @Inject constructor(
         val categoriesList = categoriesNames.map { categoryName ->
             Category(categoryName, getMoviesListAsync(categoryName.id)?.await())
         }
-        moviesDao.deleteOldMovies()
-        categoriesList.forEach { category ->
-            val categoryId = category.categoryName.id
-            moviesDao.saveMoviesAndDependencies(category.toMovieEntityList(), categoryId)
-        }
+        moviesDao.saveMoviesAndDependencies(categoriesList)
     }
 
     private fun getCategoriesFromDB(): Flow<List<Category>> {

@@ -6,12 +6,14 @@ import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.model.FRAGMENT_HOME_ITEM_SPAN_COUNT
 import com.example.tmdb.databinding.FragmentHomeItemBinding
 import com.example.tmdb.ui.home.adapter.MovieItemAdapter
+import com.example.tmdb.ui.home.adapter.OnItemClickListener
 
 class CategoryViewHolder(
     private val binding: FragmentHomeItemBinding,
+    onItemClickListener: OnItemClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val movieItemAdapter = MovieItemAdapter()
+    private val movieItemAdapter = MovieItemAdapter(onItemClickListener)
 
     init {
         binding.fragmentHomeItemRecyclerView.adapter = movieItemAdapter

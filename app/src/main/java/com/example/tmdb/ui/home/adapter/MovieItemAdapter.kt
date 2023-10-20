@@ -8,7 +8,7 @@ import com.example.tmdb.databinding.FragmentHomeMovieItemBinding
 import com.example.tmdb.ui.home.utils.MovieItemDiffCallback
 import com.example.tmdb.ui.home.viewholder.MovieItemViewHolder
 
-class MovieItemAdapter:
+class MovieItemAdapter(private val onItemClickListener: OnItemClickListener):
     ListAdapter<Movie, MovieItemViewHolder>(MovieItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
@@ -21,5 +21,12 @@ class MovieItemAdapter:
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val movieItem = getItem(position)
         holder.bind(movieItem)
+        holder.itemView.setOnClickListener {
+            onItemClickListener.onClick(movieItem)
+        }
     }
+}
+
+interface OnItemClickListener {
+    fun onClick(movieItem: Movie)
 }

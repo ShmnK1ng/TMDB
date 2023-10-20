@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_movie_overview_genre"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/fragment_movie_overview_genre_elevation"
+    app:cardBackgroundColor="@color/transparent_black"
+    android:layout_marginEnd="@dimen/fragment_movie_overview_genre_margin_end"
+    app:cardCornerRadius="@dimen/fragment_movie_overview_genre_corner_radius"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <TextView
+        android:id="@+id/fragment_movie_overview_genre_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fragment_movie_overview_genre_text_view_margin_start"
+        android:layout_marginEnd="@dimen/fragment_movie_overview_genre_text_view_margin_end"
+        style="@style/WhiteTextWithBlackOutline"
+        android:text="@string/fragment_movie_overview_genre_text_view_text" />
+
+</androidx.cardview.widget.CardView>

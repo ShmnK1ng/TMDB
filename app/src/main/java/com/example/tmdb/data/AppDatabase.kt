@@ -9,11 +9,14 @@ import com.example.tmdb.data.model.*
     entities = [
         CategoryEntity::class,
         MovieEntity::class,
-        CategoryAndMoviesDependenciesEntity::class
+        CategoryAndMoviesDependenciesEntity::class,
+        MovieOverviewEntity::class,
+        GenreEntity::class
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun categoriesDao(): CategoriesDao
     abstract fun moviesDao(): MoviesDao
+    abstract fun movieOverviewDao(): MovieOverviewDao
 }

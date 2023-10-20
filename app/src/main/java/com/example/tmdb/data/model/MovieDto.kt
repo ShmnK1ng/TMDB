@@ -4,13 +4,14 @@ import com.squareup.moshi.Json
 
 data class MovieDto(
     @Json(name = "id")
-    val id: String,
+    val remoteId: String,
     @Json(name = "title")
     val title: String,
     @Json(name = "vote_average")
     val rating: Double,
     @Json(name = "poster_path")
-    val posterPath: String?
+    val posterPath: String?,
+    val type: Int = MOVIES_TYPE
 )
 
 data class MovieResultsDto(

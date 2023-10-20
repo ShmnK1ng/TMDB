@@ -8,7 +8,7 @@ import com.example.tmdb.databinding.FragmentHomeItemBinding
 import com.example.tmdb.ui.home.viewholder.CategoryViewHolder
 import com.example.tmdb.ui.home.utils.CategoryDiffCallback
 
-class CategoryAdapter :
+class CategoryAdapter(private val onItemClickListener: OnItemClickListener) :
     ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(
@@ -17,7 +17,7 @@ class CategoryAdapter :
     ): CategoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = FragmentHomeItemBinding.inflate(layoutInflater, parent, false)
-        return CategoryViewHolder(binding)
+        return CategoryViewHolder(binding, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {

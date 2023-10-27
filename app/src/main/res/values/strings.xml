@@ -16,8 +16,9 @@
     <string name="fragment_movie_item_overview_release_date_text_view_text">Year</string>
     <string name="fragment_movie_overview_genre_text_view_text">Genre</string>
     <string name="arg_id">remoteId</string>
-    <string name="arg_type">string</string>
+    <string name="arg_type">Movie</string>
     <string name="fragment_movie_item_overview_overview_text_view_text">Overview:</string>
     <string name="fragment_movie_item_overview_overview_text">overview</string>
     <string name="fragment_movie_item_overview_poster_content_description">poster</string>
+    <string name="data_time_formatter_pattern">yyyy-MM-dd</string>
 </resources>

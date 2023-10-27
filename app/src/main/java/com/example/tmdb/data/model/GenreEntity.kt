@@ -1,39 +1,31 @@
 package com.example.tmdb.data.model
 
 import androidx.room.*
-import androidx.room.ForeignKey.Companion.CASCADE
 
 @Entity(
     tableName = "genres",
     foreignKeys = [
         ForeignKey(
-            entity = MovieEntity::class,
+            entity = MovieOverviewEntity::class,
             parentColumns = ["id"],
-            childColumns = ["movieId"],
-            onDelete = CASCADE
+            childColumns = ["movieOverviewId"],
+            onDelete = ForeignKey.CASCADE
         )
     ]
 )
 data class GenreEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val movieId: Int,
+    val movieOverviewId: Int,
     val name: String
 )
 
-data class MovieWithGenresAndOverview(
+data class MovieOverviewWithGenres(
     @Embedded
-    val movie: MovieEntity,
+    val movieOverview: MovieOverviewEntity,
     @Relation(
         parentColumn = "id",
-        entity = MovieOverviewEntity::class,
-        entityColumn = "movieId"
+        entityColumn = "movieOverviewId"
     )
-    val overview: MovieOverviewEntity?,
-    @Relation(
-        parentColumn = "id",
-        entity = GenreEntity::class,
-        entityColumn = "movieId"
-    )
-    val genres: List<GenreEntity>?
+    val genres: List<GenreEntity>
 )

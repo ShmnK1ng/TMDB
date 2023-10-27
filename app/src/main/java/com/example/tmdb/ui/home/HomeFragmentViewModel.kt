@@ -7,7 +7,6 @@ import com.example.tmdb.data.model.Movie
 import com.example.tmdb.data.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,15 +20,11 @@ class HomeFragmentViewModel @Inject constructor(
     val goToMovieOverview: Flow<Movie?> = _goToMovieOverview.asStateFlow()
 
     fun onMovieItemClicked(movie: Movie) {
-        viewModelScope.launch {
             _goToMovieOverview.value = movie
-        }
     }
 
     fun resetClickState() {
-        viewModelScope.launch {
             _goToMovieOverview.value = null
-        }
     }
 
     init {

@@ -12,10 +12,10 @@ abstract class MoviesDao {
     abstract suspend fun saveCategoryAndMovieDependency(categoryAndMoviesDependenciesEntity: CategoryAndMoviesDependenciesEntity)
 
     @Query("SELECT id FROM movies WHERE remoteId = :remoteId AND type = :type")
-    abstract fun getMovieByRemoteIdAndType(remoteId: String, type: Int): Int?
+    abstract fun getMovieByRemoteIdAndType(remoteId: String, type: Type): Int?
 
     @Query("UPDATE movies SET title = :newTitle, rating = :newRating, poster_path = :newPosterPath WHERE remoteId = :remoteId AND type = :type")
-    abstract fun updateMovieByRemoteIdAndType(remoteId: String, type: Int, newTitle: String, newRating: Double, newPosterPath: String)
+    abstract fun updateMovieByRemoteIdAndType(remoteId: String, type: Type, newTitle: String, newRating: Double, newPosterPath: String)
 
     @Transaction
     open suspend fun saveMoviesAndDependencies(categoriesList: List<Category>?) {

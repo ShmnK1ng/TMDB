@@ -1,6 +1,7 @@
 package com.example.tmdb.data.model
 
 import com.squareup.moshi.Json
+import java.time.Instant
 
 data class SeriesOverviewDto(
     @Json(name = "id")
@@ -14,7 +15,7 @@ data class SeriesOverviewDto(
     @Json(name = "backdrop_path")
     val backdropPath: String,
     @Json(name = "first_air_date")
-    val releaseDate: String,
+    val releaseDate: Instant,
     @Json(name = "genres")
     val genres: List<Genre>
 )

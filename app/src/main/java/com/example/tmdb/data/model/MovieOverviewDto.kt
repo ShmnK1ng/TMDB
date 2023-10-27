@@ -1,8 +1,9 @@
 package com.example.tmdb.data.model
 
 import com.squareup.moshi.Json
+import java.time.Instant
 
-data class MovieOverviewDto (
+data class MovieOverviewDto(
     @Json(name = "id")
     val remoteId: String,
     @Json(name = "title")
@@ -14,7 +15,7 @@ data class MovieOverviewDto (
     @Json(name = "backdrop_path")
     val backdropPath: String,
     @Json(name = "release_date")
-    val releaseDate: String,
+    val releaseDate: Instant,
     @Json(name = "genres")
     val genres: List<Genre>
-        )
+)

@@ -11,7 +11,6 @@ data class SeriesDto(
     val rating: Double,
     @Json(name = "poster_path")
     val posterPath: String?,
-    val type: Int = SERIES_TYPE
 )
 
 data class SeriesResultsDto(

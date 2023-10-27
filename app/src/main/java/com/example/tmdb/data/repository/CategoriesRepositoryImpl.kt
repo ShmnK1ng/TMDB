@@ -1,6 +1,7 @@
 package com.example.tmdb.data.repository
 
 import com.example.tmdb.data.model.*
+import com.example.tmdb.data.model.utils.TaskManager
 import com.example.tmdb.network.CategoriesApi
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -11,15 +12,11 @@ class CategoriesRepositoryImpl @Inject constructor(
     private val api: CategoriesApi,
     private val moviesDao: MoviesDao,
     private val categoriesDao: CategoriesDao,
-    private val coroutineScope: CoroutineScope
+    private val taskManager: TaskManager
 ) : CategoriesRepository {
-    private var previousJob: Job? = null
 
     override fun getCategories(): Flow<List<Category>> {
-        if (previousJob?.isActive == false || previousJob == null) {
-            previousJob?.cancel()
-            previousJob =  coroutineScope.launch { updateCategoriesDB() }
-        }
+        taskManager.startTask { updateCategoriesDB() }
         return getCategoriesFromDB()
     }
 

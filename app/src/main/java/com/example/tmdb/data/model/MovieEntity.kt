@@ -14,5 +14,5 @@ data class MovieEntity(
     val rating: Double,
     @ColumnInfo(name = "poster_path")
     val posterPath: String,
-    val type: Int
+    val type: Type
 )

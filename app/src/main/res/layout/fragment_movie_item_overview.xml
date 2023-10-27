@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/fragment_movie_item_overview_poster"
         android:layout_width="@dimen/fragment_movie_item_overview_poster_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fragment_movie_item_overview_poster_height"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/fragment_movie_item_overview_poster_content_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

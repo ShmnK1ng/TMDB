@@ -7,36 +7,25 @@ import kotlinx.coroutines.flow.Flow
 abstract class MovieOverviewDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun saveMovieOverview(movieOverviewEntity: MovieOverviewEntity)
+    abstract fun saveMovieOverview(movieOverviewEntity: MovieOverviewEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun saveMovieGenres(movieGenresList: List<GenreEntity>)
 
-    @Query("SELECT * FROM movies WHERE id = :movieId")
-    abstract fun getMovieWithGenresAndOverview(movieId: Int): Flow<MovieWithGenresAndOverview>
+    @Transaction
+    @Query("SELECT * FROM movies_overview WHERE movieId = :movieId")
+    abstract fun getMovieOverviewWithGenresById(movieId: Int): Flow<MovieOverviewWithGenres>
 
-    @Query("SELECT id FROM movies_overview WHERE movieId = :movieId")
-    abstract fun getMovieOverviewIdByMovieId(movieId: Int): Int?
+    @Query("DELETE FROM movies_overview WHERE movieId = :movieId")
+    abstract fun deleteMovieOverviewById(movieId: Int)
 
     @Update
     abstract fun updateMovieOverview(movieOverview: MovieOverviewEntity)
 
-    @Query("DELETE FROM genres WHERE movieId = :movieId")
-    abstract fun deleteGenresForMovie(movieId: Int)
-
     @Transaction
     open suspend fun updateMovieOverviewDB(movieId: Int, movieOverview: MovieOverview) {
-        val movieOverviewEntity = movieOverview.toMovieOverviewEntity()
-        val genreEntityList = movieOverview.toMovieGenresEntity()
-        val movieOverviewId = getMovieOverviewIdByMovieId(movieId)
-        if (movieOverviewId == null) {
-            saveMovieOverview(movieOverviewEntity)
-            saveMovieGenres(genreEntityList)
-        } else {
-            movieOverviewEntity.id = movieOverviewId
-            updateMovieOverview(movieOverviewEntity)
-            deleteGenresForMovie(movieId)
-            saveMovieGenres(genreEntityList)
-        }
+        deleteMovieOverviewById(movieId)
+        val movieOverviewId = saveMovieOverview(movieOverview.toMovieOverviewEntity()).toInt()
+        saveMovieGenres(movieOverview.toMovieGenresEntity(movieOverviewId))
     }
 }

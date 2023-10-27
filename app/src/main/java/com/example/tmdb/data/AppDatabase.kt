@@ -2,7 +2,10 @@ package com.example.tmdb.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.tmdb.data.model.*
+import com.example.tmdb.data.model.utils.InstantConverter
+import com.example.tmdb.data.model.utils.TypeConverter
 
 @Database(
     version = 1,
@@ -13,6 +16,10 @@ import com.example.tmdb.data.model.*
         MovieOverviewEntity::class,
         GenreEntity::class
     ]
+)
+@TypeConverters(
+    TypeConverter::class,
+    InstantConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
 

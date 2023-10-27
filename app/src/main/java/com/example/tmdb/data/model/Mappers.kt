@@ -1,5 +1,14 @@
 package com.example.tmdb.data.model
 
+import android.content.Context
+import com.example.tmdb.R
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
     return this.map {
         Movie(
@@ -7,7 +16,7 @@ fun List<MovieDto>.moviesDtoListToMovieList(): List<Movie> {
             title = it.title,
             rating = it.rating,
             posterPath = IMAGE_BASE_PATH + it.posterPath,
-            type = it.type
+            type = Type.Movies
         )
     }
 }
@@ -19,7 +28,7 @@ fun List<SeriesDto>.seriesDtoListToMovieList(): List<Movie> {
             title = it.name,
             rating = it.rating,
             posterPath = IMAGE_BASE_PATH + it.posterPath,
-            type = it.type
+            type = Type.Series
         )
     }
 }
@@ -112,12 +121,31 @@ fun MovieOverview.toMovieOverviewEntity(): MovieOverviewEntity {
     )
 }
 
-fun MovieOverview.toMovieGenresEntity(): List<GenreEntity> {
+fun MovieOverview.toMovieGenresEntity(id: Int): List<GenreEntity> {
     return this.genres.map {
         GenreEntity(
             id = 0,
-            movieId = this.id,
+            movieOverviewId = id,
             name = it.name
         )
     }
+}
+
+fun Flow<MovieOverviewWithGenres>.toMovieOverviewFlow(): Flow<MovieOverview> {
+    return this.filterNotNull().map {
+        MovieOverview(
+            id = it.movieOverview.id,
+            movieId = it.movieOverview.movieId,
+            title = it.movieOverview.title,
+            overview = it.movieOverview.overview,
+            rating = it.movieOverview.rating,
+            backdropPath = it.movieOverview.backdropPath,
+            releaseDate = it.movieOverview.releaseDate,
+            genres = it.genres.toGenre()
+        )
+    }
+}
+
+fun Instant.toStringDate(context: Context?): String {
+    return this.atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern(context?.getString(R.string.data_time_formatter_pattern) ?: ""))
 }

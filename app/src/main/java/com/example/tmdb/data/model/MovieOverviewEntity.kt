@@ -1,6 +1,7 @@
 package com.example.tmdb.data.model
 
 import androidx.room.*
+import java.time.Instant
 
 @Entity(
     tableName = "movies_overview",
@@ -16,7 +17,7 @@ import androidx.room.*
 
 data class MovieOverviewEntity (
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    val id: Int,
     val movieId: String,
     val title: String,
     val overview: String,
@@ -24,5 +25,5 @@ data class MovieOverviewEntity (
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String,
     @ColumnInfo(name = "release_date")
-    val releaseDate: String
+    val releaseDate: Instant
 )

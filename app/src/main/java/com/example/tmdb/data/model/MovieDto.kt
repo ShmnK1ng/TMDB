@@ -11,7 +11,6 @@ data class MovieDto(
     val rating: Double,
     @Json(name = "poster_path")
     val posterPath: String?,
-    val type: Int = MOVIES_TYPE
 )
 
 data class MovieResultsDto(

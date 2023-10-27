@@ -1,12 +1,14 @@
 package com.example.tmdb.data.model
 
-data class MovieOverview (
-    val id: Int = 0,
+import java.time.Instant
+
+data class MovieOverview(
+    val id: Int,
     val movieId: String,
     val title: String,
     val overview: String,
     val rating: Double,
     val backdropPath: String,
-    val releaseDate: String,
+    val releaseDate: Instant,
     val genres: List<Genre>
-        )
+)

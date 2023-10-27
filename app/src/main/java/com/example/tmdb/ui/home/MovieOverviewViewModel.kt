@@ -1,5 +1,6 @@
 package com.example.tmdb.ui.home
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tmdb.data.model.Movie
@@ -11,16 +12,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieOverviewViewModel @Inject constructor(
-    private val getMovieOverviewUseCase: GetMovieOverviewUseCase
-): ViewModel() {
+    getMovieOverviewUseCase: GetMovieOverviewUseCase,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _movieOverview: MutableStateFlow<MovieOverview?> = MutableStateFlow(null)
     val movieOverview: Flow<MovieOverview?> = _movieOverview.asStateFlow()
 
-    fun viewCreated(movieItem: Movie) {
-       getMovieOverviewUseCase.getMovieOverview(movieItem).onEach {
-           _movieOverview.value = it
-       }
-           .launchIn(viewModelScope)
+    init {
+        val movie = savedStateHandle.get<Movie>("arg_id")
+        if (movie != null) {
+            getMovieOverviewUseCase.getMovieOverview(movie).onEach {
+                _movieOverview.value = it
+            }
+                .launchIn(viewModelScope)
+        }
     }
 }

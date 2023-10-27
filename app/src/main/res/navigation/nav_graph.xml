@@ -10,19 +10,19 @@
         android:name="com.example.tmdb.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-
         <action
             android:id="@+id/action_homeFragment_to_movieOverviewFragment"
-            app:destination="@id/movieOverviewFragment" />
+            app:destination="@id/movieOverviewFragment"/>
     </fragment>
+
     <fragment
         android:id="@+id/movieOverviewFragment"
         android:name="com.example.tmdb.ui.home.MovieOverviewFragment"
         android:label="fragment_movie_overview"
         tools:layout="@layout/fragment_movie_item_overview" >
         <argument
-            android:name="@string/arg_id"
-            app:argType="@string/arg_type" />
+            android:name="arg_id"
+            app:argType="com.example.tmdb.data.model.Movie" />
         <action
             android:id="@+id/action_movieOverviewFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

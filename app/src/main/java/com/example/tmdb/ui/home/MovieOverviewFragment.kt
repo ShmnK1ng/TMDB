@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import coil.load
 import com.example.tmdb.data.model.FRAGMENT_MOVIE_OVERVIEW_SPAN_COUNT
@@ -18,18 +19,25 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieOverviewFragment : Fragment() {
 
-    private lateinit var binding: FragmentMovieItemOverviewBinding
-    private val viewModel: MovieOverviewViewModel by viewModels()
+    private var _binding: FragmentMovieItemOverviewBinding? = null
+    @Inject
+    lateinit var factory: MovieOverviewViewModel.Factory
+    private val args: MovieOverviewFragmentArgs by navArgs()
+    private val viewModel: MovieOverviewViewModel by viewModels {
+        MovieOverviewViewModel.provideMovieOverviewViewModelFactory(factory, args.argId)
+    }
+    private val binding: FragmentMovieItemOverviewBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMovieItemOverviewBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieItemOverviewBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -51,5 +59,10 @@ class MovieOverviewFragment : Fragment() {
                 genreAdapter.submitList(it.genres)
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -20,9 +20,6 @@ class MovieItemAdapter(private val onItemClickListener: OnItemClickListener) :
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val movieItem = getItem(position)
         holder.bind(movieItem)
-        holder.itemView.setOnClickListener {
-            onItemClickListener.onClick(movieItem)
-        }
     }
 }
 

@@ -26,15 +26,15 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeBinding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: HomeFragmentViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -71,5 +71,10 @@ class HomeFragment : Fragment() {
             Lifecycle.State.STARTED
         ).onEach { categoryAdapter.submitList(it) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

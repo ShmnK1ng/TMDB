@@ -17,6 +17,4 @@ const val TRENDING_MOVIES_ID = 1
 const val TRENDING_SERIES_ID = 2
 const val UPCOMING_MOVIES_ID = 3
 const val UPCOMING_SERIES_ID = 4
-const val SERIES_TYPE = 0
-const val MOVIES_TYPE = 1
 const val FRAGMENT_MOVIE_OVERVIEW_SPAN_COUNT = 1

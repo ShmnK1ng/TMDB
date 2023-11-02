@@ -1,24 +1,22 @@
 package com.example.tmdb.data.model.utils
 
-import com.example.tmdb.data.model.MOVIES_TYPE
-import com.example.tmdb.data.model.SERIES_TYPE
 import com.example.tmdb.data.model.Type
 
 class TypeConverter {
     @androidx.room.TypeConverter
-    fun fromType(type: Type): Int {
+    fun fromType(type: Type): String {
         return when (type) {
-            Type.Movies -> MOVIES_TYPE
-            Type.Series -> SERIES_TYPE
+            Type.Movies -> Type.Movies.name
+            Type.Series -> Type.Series.name
         }
     }
 
     @androidx.room.TypeConverter
-    fun toType(typeInt: Int): Type {
-        return when (typeInt) {
-            MOVIES_TYPE -> Type.Movies
-            SERIES_TYPE -> Type.Series
-            else -> throw IllegalArgumentException("Invalid value for Type: $typeInt")
+    fun toType(type: String): Type {
+        return when (type) {
+            Type.Movies.name -> Type.Movies
+            Type.Series.name -> Type.Series
+            else -> throw IllegalArgumentException("Invalid value for Type: $type")
         }
     }
 }

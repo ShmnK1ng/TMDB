@@ -26,7 +26,7 @@ data class CategoryAndMoviesDependenciesEntity(
     @ColumnInfo(name = "category_id")
     val categoryId: Int,
     @ColumnInfo(name = "movie_id", index = true)
-    val movieId: String
+    val movieId: Int
 )
 
 data class CategoryAndMovies(

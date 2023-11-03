@@ -10,4 +10,15 @@
     <string name="category_name_trending_series">Trending series</string>
     <string name="category_name_upcoming_movies">Upcoming movies</string>
     <string name="category_name_upcoming_series">Upcoming series</string>
+    <string name="fragment_movie_item_overview_title">Title</string>
+    <string name="fragment_movie_item_overview_rating_star_content_description">star rating</string>
+    <string name="fragment_movie_item_overview_rating_textview_text">Rating</string>
+    <string name="fragment_movie_item_overview_release_date_text_view_text">Year</string>
+    <string name="fragment_movie_overview_genre_text_view_text">Genre</string>
+    <string name="arg_id">remoteId</string>
+    <string name="arg_type">Movie</string>
+    <string name="fragment_movie_item_overview_overview_text_view_text">Overview:</string>
+    <string name="fragment_movie_item_overview_overview_text">overview</string>
+    <string name="fragment_movie_item_overview_poster_content_description">poster</string>
+    <string name="data_time_formatter_pattern">yyyy-MM-dd</string>
 </resources>

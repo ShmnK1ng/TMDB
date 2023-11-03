@@ -7,10 +7,12 @@ import androidx.room.*
 )
 
 data class MovieEntity(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val remoteId: String,
     val title: String,
     val rating: Double,
     @ColumnInfo(name = "poster_path")
-    val posterPath: String
+    val posterPath: String,
+    val type: Type
 )

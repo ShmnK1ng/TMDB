@@ -6,6 +6,7 @@ import com.example.tmdb.R
 import com.example.tmdb.data.AppDatabase
 import com.example.tmdb.data.model.CategoriesDao
 import com.example.tmdb.data.model.DATABASE_NAME
+import com.example.tmdb.data.model.MovieOverviewDao
 import com.example.tmdb.data.model.MoviesDao
 import dagger.Module
 import dagger.Provides
@@ -35,5 +36,10 @@ class DatabaseModule {
     @Provides
     fun provideMoviesDao(appDatabase: AppDatabase): MoviesDao {
         return appDatabase.moviesDao()
+    }
+
+    @Provides
+    fun provideMovieOverviewDao(appDatabase: AppDatabase): MovieOverviewDao {
+        return appDatabase.movieOverviewDao()
     }
 }

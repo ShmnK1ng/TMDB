@@ -1,13 +1,16 @@
 package com.example.tmdb.di
 
+import android.content.Context
 import com.example.tmdb.data.model.BASE_URL
 import com.example.tmdb.data.model.RequestsInterceptor
+import com.example.tmdb.data.model.utils.InstantAdapter
 import com.example.tmdb.ui.home.utils.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,7 +46,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideMoshi(): Moshi = Moshi.Builder()
+    fun provideMoshi(@ApplicationContext context: Context): Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
+        .add(InstantAdapter(context))
         .build()
 }

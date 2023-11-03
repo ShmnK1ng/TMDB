@@ -4,13 +4,15 @@ buildscript {
         kotlin_version = '1.7.21'
     }
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
     }
     dependencies {
 
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.44")
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21"
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.48")
+        def nav_version = "2.7.4"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files

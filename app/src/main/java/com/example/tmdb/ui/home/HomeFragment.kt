@@ -26,16 +26,15 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private var binding: FragmentHomeBinding? = null
     private val viewModel: HomeFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,25 +55,25 @@ class HomeFragment : Fragment() {
             .onEach { movieItem ->
                 controller.navigate(HomeFragmentDirections.actionHomeFragmentToMovieOverviewFragment(movieItem))
                 viewModel.resetClickState()
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun setupCategoryAdapter(onItemClickListener: OnItemClickListener) {
         val categoryAdapter = CategoryAdapter(onItemClickListener)
-        binding.fragmentHomeRecyclerView.adapter = categoryAdapter
-        binding.fragmentHomeRecyclerView.layoutManager = StaggeredGridLayoutManager(
-            FRAGMENT_HOME_SPAN_COUNT,
-            StaggeredGridLayoutManager.VERTICAL
-        )
+        binding?.let { binding ->
+            binding.fragmentHomeRecyclerView.adapter = categoryAdapter
+            binding.fragmentHomeRecyclerView.layoutManager = StaggeredGridLayoutManager(FRAGMENT_HOME_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
+        }
         viewModel.categories.flowWithLifecycle(
             viewLifecycleOwner.lifecycle,
             Lifecycle.State.STARTED
-        ).onEach { categoryAdapter.submitList(it) }
+        )
+            .onEach { categoryAdapter.submitList(it) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }

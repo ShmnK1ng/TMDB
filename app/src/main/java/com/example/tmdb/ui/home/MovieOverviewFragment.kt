@@ -24,38 +24,41 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieOverviewFragment : Fragment() {
 
-    private var _binding: FragmentMovieItemOverviewBinding? = null
+    private var binding: FragmentMovieItemOverviewBinding? = null
     @Inject
     lateinit var factory: MovieOverviewViewModel.Factory
     private val args: MovieOverviewFragmentArgs by navArgs()
     private val viewModel: MovieOverviewViewModel by viewModels {
         MovieOverviewViewModel.provideMovieOverviewViewModelFactory(factory, args.argId)
     }
-    private val binding: FragmentMovieItemOverviewBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieItemOverviewBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentMovieItemOverviewBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val genreAdapter = GenreAdapter()
-        binding.fragmentMovieItemOverviewRecyclerview.adapter = genreAdapter
-        binding.fragmentMovieItemOverviewRecyclerview.layoutManager = StaggeredGridLayoutManager(
-            FRAGMENT_MOVIE_OVERVIEW_SPAN_COUNT, StaggeredGridLayoutManager.HORIZONTAL
-        )
+        binding?.let { binding ->
+            binding.fragmentMovieItemOverviewRecyclerview.adapter = genreAdapter
+            binding.fragmentMovieItemOverviewRecyclerview.layoutManager = StaggeredGridLayoutManager(
+                FRAGMENT_MOVIE_OVERVIEW_SPAN_COUNT, StaggeredGridLayoutManager.HORIZONTAL)
+        }
         viewModel.movieOverview.flowWithStartedLifecycle(viewLifecycleOwner)
             .filterNotNull()
             .onEach {
-                binding.fragmentMovieItemOverviewPoster.load(it.backdropPath)
-                binding.fragmentMovieItemOverviewTitle.text = it.title
-                binding.fragmentMovieItemOverviewRatingTextview.text = it.rating.toString()
-                binding.fragmentMovieItemOverviewReleaseDateTextView.text = it.releaseDate.toStringDate(context)
-                binding.fragmentMovieItemOverviewOverviewText.text = it.overview
+                binding?.let {binding ->
+                    binding.fragmentMovieItemOverviewPoster.load(it.backdropPath)
+                    binding.fragmentMovieItemOverviewTitle.text = it.title
+                    binding.fragmentMovieItemOverviewRatingTextview.text = it.rating.toString()
+                    binding.fragmentMovieItemOverviewReleaseDateTextView.text = it.releaseDate.toStringDate(context)
+                    binding.fragmentMovieItemOverviewOverviewText.text = it.overview
+                }
+
                 genreAdapter.submitList(it.genres)
         }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -63,6 +66,6 @@ class MovieOverviewFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }

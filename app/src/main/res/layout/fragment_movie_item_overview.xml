@@ -6,40 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.MovieOverviewFragment">
 
-
     <ImageView
         android:id="@+id/fragment_movie_item_overview_poster"
         android:layout_width="@dimen/fragment_movie_item_overview_poster_width"
         android:layout_height="@dimen/fragment_movie_item_overview_poster_height"
-        android:scaleType="centerCrop"
         android:contentDescription="@string/fragment_movie_item_overview_poster_content_description"
+        android:foreground="@color/transparent_black"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragment_movie_item_overview_title"
-        style="@style/WhiteTextWithBlackOutline"
         android:layout_width="@dimen/fragment_movie_item_overview_title_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fragment_movie_item_overview_title_margin_start"
-        android:layout_marginEnd="@dimen/fragment_movie_item_overview_title_margin_end"
         android:layout_marginTop="@dimen/fragment_movie_item_overview_title_margin_top"
+        android:layout_marginEnd="@dimen/fragment_movie_item_overview_title_margin_end"
         android:text="@string/fragment_movie_item_overview_title"
+        android:textColor="@color/white"
         android:textSize="@dimen/fragment_movie_item_overview_title_text_size"
         app:layout_constraintEnd_toStartOf="@+id/fragment_movie_item_overview_rating_card_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/fragment_movie_item_overview_rating_card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_movie_item_overview_rating_card_view_margin_top"
         android:layout_marginEnd="@dimen/fragment_movie_item_overview_rating_card_view_margin_end"
-        app:cardBackgroundColor="@color/transparent_black"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="@dimen/fragment_movie_item_overview_rating_card_view_corner_radius"
         app:cardElevation="@dimen/fragment_movie_item_overview_rating_card_view_elevation"
+        app:strokeColor="@color/white"
+        app:strokeWidth="@dimen/fragment_movie_item_overview_rating_card_view_stroke_width"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -53,6 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/fragment_movie_item_overview_rating_star_margin_top"
                 android:contentDescription="@string/fragment_movie_item_overview_rating_star_content_description"
+                android:padding="@dimen/fragment_movie_item_overview_rating_star_padding"
+                android:paddingEnd="@dimen/fragment_movie_item_overview_rating_star_padding_end"
                 android:paddingStart="@dimen/fragment_movie_item_overview_rating_star_padding_start"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,9 +65,9 @@
 
             <TextView
                 android:id="@+id/fragment_movie_item_overview_rating_textview"
-                style="@style/WhiteTextWithBlackOutline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:paddingEnd="@dimen/fragment_movie_item_overview_rating_textview_padding_end"
                 android:text="@string/fragment_movie_item_overview_rating_textview_text"
                 android:textSize="@dimen/fragment_movie_item_overview_rating_textview_text_size"
@@ -71,30 +75,42 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/fragment_movie_item_overview_release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fragment_movie_item_overview_release_date_card_view_margin_start"
         android:layout_marginBottom="@dimen/fragment_movie_item_overview_release_date_card_view_margin_bottom"
-        app:cardBackgroundColor="@color/transparent_black"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="@dimen/fragment_movie_item_overview_release_date_card_view_corner_radius"
         app:cardElevation="@dimen/fragment_movie_item_overview_release_date_card_elevation"
+        app:strokeColor="@color/white"
+        app:strokeWidth="@dimen/fragment_movie_item_overview_release_date_stroke_width"
         app:layout_constraintBottom_toTopOf="@+id/fragment_movie_item_overview_recyclerview"
         app:layout_constraintStart_toEndOf="@id/fragment_movie_item_overview_title"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/fragment_movie_item_overview_release_date_text_view"
-            style="@style/WhiteTextWithBlackOutline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/fragment_movie_item_overview_release_date_text_view_padding_start"
-            android:paddingEnd="@dimen/fragment_movie_item_overview_release_date_text_view_padding_end"
-            android:text="@string/fragment_movie_item_overview_release_date_text_view_text" />
-    </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/fragment_movie_item_overview_release_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/fragment_movie_item_overview_release_date_text_view_padding_start"
+                android:paddingEnd="@dimen/fragment_movie_item_overview_release_date_text_view_padding_end"
+                android:padding="@dimen/fragment_movie_item_overview_release_date_text_view_padding"
+                android:text="@string/fragment_movie_item_overview_release_date_text_view_text"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_movie_item_overview_recyclerview"
@@ -106,22 +122,10 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_movie_item_overview_overview_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fragment_movie_item_overview_overview_text_view_margin_start"
-        android:layout_marginTop="@dimen/fragment_movie_item_overview_overview_text_view_margin_top"
-        android:text="@string/fragment_movie_item_overview_overview_text_view_text"
-        android:textColor="@color/black"
-        android:textSize="@dimen/fragment_movie_item_overview_overview_text_view_text_size"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_movie_item_overview_poster" />
-
-    <TextView
         android:id="@+id/fragment_movie_item_overview_overview_text"
         android:layout_width="@dimen/fragment_movie_item_overview_overview_text_width"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_movie_item_overview_overview_text_margin_top"
         android:layout_marginStart="@dimen/fragment_movie_item_overview_overview_text_margin_start"
         android:layout_marginEnd="@dimen/fragment_movie_item_overview_overview_text_margin_end"
         android:text="@string/fragment_movie_item_overview_overview_text"
@@ -129,6 +133,6 @@
         android:textSize="@dimen/fragment_movie_item_overview_overview_text_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_movie_item_overview_overview_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_movie_item_overview_poster" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

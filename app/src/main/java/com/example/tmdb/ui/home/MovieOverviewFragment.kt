@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import coil.load
 import com.example.tmdb.data.model.FRAGMENT_MOVIE_OVERVIEW_SPAN_COUNT
+import com.example.tmdb.data.model.ROUNDING_PARAMETER
 import com.example.tmdb.data.model.toStringDate
 import com.example.tmdb.databinding.FragmentMovieItemOverviewBinding
 import com.example.tmdb.ui.home.adapter.GenreAdapter
@@ -54,7 +55,7 @@ class MovieOverviewFragment : Fragment() {
                 binding?.let {binding ->
                     binding.fragmentMovieItemOverviewPoster.load(it.backdropPath)
                     binding.fragmentMovieItemOverviewTitle.text = it.title
-                    binding.fragmentMovieItemOverviewRatingTextview.text = it.rating.toString()
+                    binding.fragmentMovieItemOverviewRatingTextview.text = String.format(ROUNDING_PARAMETER, it.rating)
                     binding.fragmentMovieItemOverviewReleaseDateTextView.text = it.releaseDate.toStringDate(context)
                     binding.fragmentMovieItemOverviewOverviewText.text = it.overview
                 }

@@ -33,13 +33,8 @@
     <dimen name="fragment_movie_item_overview_title_margin_start">24dp</dimen>
     <dimen name="fragment_movie_item_overview_title_margin_top">16dp</dimen>
     <dimen name="fragment_movie_item_overview_title_text_size">20sp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_card_view_margin_top">16dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_card_view_margin_end">24dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_star_margin_top">1dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_star_padding_start">4dp</dimen>
     <dimen name="fragment_movie_item_overview_rating_textview_padding_end">8dp</dimen>
     <dimen name="fragment_movie_item_overview_rating_textview_text_size">20sp</dimen>
-    <dimen name="fragment_movie_item_overview_release_date_card_view_margin_start">24dp</dimen>
     <dimen name="fragment_movie_item_overview_release_date_text_view_padding_start">6dp</dimen>
     <dimen name="fragment_movie_item_overview_release_date_text_view_padding_end">6dp</dimen>
     <dimen name="fragment_movie_item_overview_recycler_view_margin_start">24dp</dimen>
@@ -47,10 +42,8 @@
     <dimen name="fragment_movie_overview_genre_text_view_padding_end">8dp</dimen>
     <dimen name="fragment_movie_item_overview_recycler_view_margin_bottom">16dp</dimen>
     <dimen name="fragment_movie_overview_genre_margin_end">8dp</dimen>
-    <dimen name="fragment_movie_item_overview_release_date_card_view_margin_bottom">8dp</dimen>
     <dimen name="fragment_movie_item_overview_title_width">0dp</dimen>
     <dimen name="fragment_movie_item_overview_release_date_card_elevation">0dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_card_view_elevation">0dp</dimen>
     <dimen name="fragment_movie_overview_genre_elevation">0dp</dimen>
     <dimen name="fragment_movie_overview_genre_text_view_margin_start">8dp</dimen>
     <dimen name="fragment_movie_overview_genre_text_view_margin_end">8dp</dimen>
@@ -67,10 +60,15 @@
     <dimen name="fragment_movie_overview_genre_text_view_text_padding_start">6dp</dimen>
     <dimen name="fragment_movie_overview_genre_text_view_text_padding_end">6dp</dimen>
     <dimen name="fragment_movie_overview_genre_text_view_text_padding">2dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_card_view_stroke_width">1dp</dimen>
-    <dimen name="fragment_movie_item_overview_rating_star_padding">2dp</dimen>
     <dimen name="fragment_movie_item_overview_rating_star_padding_end">4dp</dimen>
     <dimen name="fragment_movie_item_overview_release_date_stroke_width">1dp</dimen>
     <dimen name="fragment_movie_item_overview_release_date_text_view_padding">2dp</dimen>
     <dimen name="fragment_movie_item_overview_overview_text_margin_top">16dp</dimen>
+    <dimen name="fragment_movie_item_overview_rating_linearLayout_margin_top">16dp</dimen>
+    <dimen name="fragment_movie_item_overview_rating_linearLayout_margin_end">24dp</dimen>
+    <dimen name="fragment_movie_item_overview_release_date_text_view_margin_start">24dp</dimen>
+    <dimen name="fragment_movie_item_overview_release_date_text_view_margin_bottom">8dp</dimen>
+    <dimen name="fragment_movie_item_overview_rating_textview_padding_start">4dp</dimen>
+    <dimen name="fragment_movie_item_overview_rating_textview_margin_top">16dp</dimen>
+    <dimen name="fragment_movie_item_overview_rating_textview_margin_end">24dp</dimen>
 </resources>

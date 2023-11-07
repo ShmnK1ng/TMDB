@@ -31,17 +31,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/fragment_movie_item_overview_rating_card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/fragment_movie_item_overview_rating_card_view_margin_top"
         android:layout_marginEnd="@dimen/fragment_movie_item_overview_rating_card_view_margin_end"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="@dimen/fragment_movie_item_overview_rating_card_view_corner_radius"
+        android:foreground="@drawable/card_border"
         app:cardElevation="@dimen/fragment_movie_item_overview_rating_card_view_elevation"
-        app:strokeColor="@color/white"
-        app:strokeWidth="@dimen/fragment_movie_item_overview_rating_card_view_stroke_width"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -75,19 +73,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/fragment_movie_item_overview_release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fragment_movie_item_overview_release_date_card_view_margin_start"
         android:layout_marginBottom="@dimen/fragment_movie_item_overview_release_date_card_view_margin_bottom"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardCornerRadius="@dimen/fragment_movie_item_overview_release_date_card_view_corner_radius"
+        android:foreground="@drawable/card_border"
         app:cardElevation="@dimen/fragment_movie_item_overview_release_date_card_elevation"
-        app:strokeColor="@color/white"
-        app:strokeWidth="@dimen/fragment_movie_item_overview_release_date_stroke_width"
         app:layout_constraintBottom_toTopOf="@+id/fragment_movie_item_overview_recyclerview"
         app:layout_constraintStart_toEndOf="@id/fragment_movie_item_overview_title"
         app:layout_constraintStart_toStartOf="parent">
@@ -110,7 +106,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_movie_item_overview_recyclerview"

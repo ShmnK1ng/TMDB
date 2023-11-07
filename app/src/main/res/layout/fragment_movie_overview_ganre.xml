@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_movie_overview_genre"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/transparent"
-    app:strokeColor="@color/white"
-    app:strokeWidth="@dimen/fragment_movie_overview_genre_card_view_stroke_width"
+    android:foreground="@drawable/card_border"
     app:cardElevation="@dimen/fragment_movie_overview_genre_elevation"
     android:layout_marginEnd="@dimen/fragment_movie_overview_genre_margin_end"
-    app:cardCornerRadius="@dimen/fragment_movie_overview_genre_corner_radius"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 
@@ -32,4 +30,4 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

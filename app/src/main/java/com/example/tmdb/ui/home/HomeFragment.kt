@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.tmdb.R
 import com.example.tmdb.data.model.FRAGMENT_HOME_SPAN_COUNT
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.databinding.FragmentHomeBinding
@@ -45,6 +45,7 @@ class HomeFragment : Fragment() {
                 viewModel.onMovieItemClicked(movieItem)
             }
         }
+        setupErrorsObserver()
         setupMovieOverviewNavigation(controller)
         setupCategoryAdapter(onItemClickListener)
     }
@@ -64,12 +65,23 @@ class HomeFragment : Fragment() {
             binding.fragmentHomeRecyclerView.adapter = categoryAdapter
             binding.fragmentHomeRecyclerView.layoutManager = StaggeredGridLayoutManager(FRAGMENT_HOME_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL)
         }
-        viewModel.categories.flowWithLifecycle(
-            viewLifecycleOwner.lifecycle,
-            Lifecycle.State.STARTED
-        )
+        viewModel.categories.flowWithStartedLifecycle(viewLifecycleOwner)
             .onEach { categoryAdapter.submitList(it) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun showToast() {
+        Toast.makeText(requireContext(), requireContext().getString(R.string.error_connection_message), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun setupErrorsObserver() {
+        viewModel.showError.flowWithStartedLifecycle(viewLifecycleOwner)
+            .onEach { throwable ->
+                if (throwable != null) {
+                    showToast()
+                    viewModel.resetErrorState()
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun onDestroyView() {

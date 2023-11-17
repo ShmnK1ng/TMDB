@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.tmdb.data.model.BASE_URL
 import com.example.tmdb.data.model.RequestsInterceptor
 import com.example.tmdb.data.model.utils.InstantAdapter
+import com.example.tmdb.network.ResultAdapterFactory
 import com.example.tmdb.ui.home.utils.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -42,6 +43,7 @@ class NetworkModule {
         .baseUrl(BASE_URL)
         .client(OkHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addCallAdapterFactory(ResultAdapterFactory())
         .build()
 
     @Singleton

@@ -6,9 +6,11 @@ import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.data.usecase.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -18,19 +20,32 @@ class HomeFragmentViewModel @Inject constructor(
     val categories: Flow<List<Category>> = _categories.asStateFlow()
     private val _goToMovieOverview: MutableStateFlow<Movie?> = MutableStateFlow(null)
     val goToMovieOverview: Flow<Movie?> = _goToMovieOverview.asStateFlow()
+    private val _showError: MutableStateFlow<Throwable?> = MutableStateFlow(null)
+    val showError: Flow<Throwable?> = _showError.asStateFlow()
 
     fun onMovieItemClicked(movie: Movie) {
-            _goToMovieOverview.value = movie
+        _goToMovieOverview.value = movie
     }
 
     fun resetClickState() {
-            _goToMovieOverview.value = null
+        _goToMovieOverview.value = null
+    }
+
+    fun resetErrorState() {
+        _showError.value = null
     }
 
     init {
         getCategoriesUseCase.getCategories()
-            .onEach { categories ->
-                _categories.value = categories
+            .debounce(200)
+            .onEach { resultCategories ->
+                println(resultCategories.error)
+                    if (resultCategories.error == null) {
+                        _categories.value = resultCategories.listCategories
+                    } else
+                    {
+                        _showError.value = resultCategories.error
+                    }
             }
             .launchIn(viewModelScope)
     }

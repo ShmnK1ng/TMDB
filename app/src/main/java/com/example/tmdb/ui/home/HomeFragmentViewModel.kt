@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.data.usecase.GetCategoriesUseCase
+import com.example.tmdb.network.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class)
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -20,8 +23,8 @@ class HomeFragmentViewModel @Inject constructor(
     val categories: Flow<List<Category>> = _categories.asStateFlow()
     private val _goToMovieOverview: MutableStateFlow<Movie?> = MutableStateFlow(null)
     val goToMovieOverview: Flow<Movie?> = _goToMovieOverview.asStateFlow()
-    private val _showError: MutableStateFlow<Throwable?> = MutableStateFlow(null)
-    val showError: Flow<Throwable?> = _showError.asStateFlow()
+    private val _showError: MutableStateFlow<Result.Failure<*>?> = MutableStateFlow(null)
+    val showError: Flow<Result.Failure<*>?> = _showError.asStateFlow()
 
     fun onMovieItemClicked(movie: Movie) {
         _goToMovieOverview.value = movie
@@ -37,15 +40,9 @@ class HomeFragmentViewModel @Inject constructor(
 
     init {
         getCategoriesUseCase.getCategories()
-            .debounce(200)
             .onEach { resultCategories ->
-                println(resultCategories.error)
-                    if (resultCategories.error == null) {
-                        _categories.value = resultCategories.listCategories
-                    } else
-                    {
-                        _showError.value = resultCategories.error
-                    }
+                _showError.value = resultCategories.error
+                _categories.value = resultCategories.listCategories
             }
             .launchIn(viewModelScope)
     }

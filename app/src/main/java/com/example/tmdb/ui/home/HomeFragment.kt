@@ -15,6 +15,7 @@ import com.example.tmdb.R
 import com.example.tmdb.data.model.FRAGMENT_HOME_SPAN_COUNT
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.databinding.FragmentHomeBinding
+import com.example.tmdb.network.Result
 import com.example.tmdb.ui.home.adapter.CategoryAdapter
 import com.example.tmdb.ui.home.adapter.OnItemClickListener
 import com.example.tmdb.ui.home.utils.flowWithStartedLifecycle
@@ -70,15 +71,24 @@ class HomeFragment : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun showToast() {
-        Toast.makeText(requireContext(), requireContext().getString(R.string.error_connection_message), Toast.LENGTH_SHORT).show()
+    private fun showToast(error: Result.Failure<*>) {
+        when (error) {
+            is Result.Failure.NetworkError -> Toast.makeText(
+                requireContext(),
+                requireContext().getString(R.string.error_connection_message),
+                Toast.LENGTH_SHORT
+            ).show()
+
+            is Result.Failure.OtherError -> Toast.makeText(requireContext(), requireContext().getString(R.string.error_other_message), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     private fun setupErrorsObserver() {
         viewModel.showError.flowWithStartedLifecycle(viewLifecycleOwner)
-            .onEach { throwable ->
-                if (throwable != null) {
-                    showToast()
+            .onEach { error ->
+                if (error != null) {
+                    showToast(error)
                     viewModel.resetErrorState()
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

@@ -22,33 +22,23 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
     ) : Callback<T> {
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
-            val result: Result<T>
-            if (response.isSuccessful) {
-                result = Result.Success.HttpResponse(
-                    value = response.body() as T,
-                    statusCode = response.code(),
-                    statusMessage = response.message(),
-                    url = call.request().url.toString(),
-                )
+            val result: Result<T> = if (response.isSuccessful) {
+                val body: T? = response.body()
+                if (body != null) {
+                    Result.Success(body)
+                } else {
+                    Result.Failure.OtherError()
+                }
             } else {
-                result = Result.Failure.HttpError(
-                    HttpException(
-                        statusCode = response.code(),
-                        statusMessage = response.message(),
-                        url = call.request().url.toString(),
-                    )
-                )
+                Result.Failure.NetworkError()
             }
             callback.onResponse(proxy, Response.success(result))
         }
 
         override fun onFailure(call: Call<T>, error: Throwable) {
             val result = when (error) {
-                is retrofit2.HttpException -> Result.Failure.HttpError(
-                    HttpException(error.code(), error.message(), cause = error)
-                )
-                is IOException -> Result.Failure.Error(error)
-                else -> Result.Failure.Error(error)
+                is IOException -> Result.Failure.NetworkError()
+                else -> Result.Failure.OtherError()
             }
 
             callback.onResponse(proxy, Response.success(result))

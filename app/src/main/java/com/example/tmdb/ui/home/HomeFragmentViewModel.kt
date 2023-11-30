@@ -41,7 +41,9 @@ class HomeFragmentViewModel @Inject constructor(
     init {
         getCategoriesUseCase.getCategories()
             .onEach { resultCategories ->
-                _showError.value = resultCategories.error
+                if (resultCategories.error != null) {
+                    _showError.value = resultCategories.error
+                }
                 _categories.value = resultCategories.listCategories
             }
             .launchIn(viewModelScope)

@@ -3,11 +3,10 @@ package com.example.tmdb.data.repository
 import com.example.tmdb.data.model.CategoriesDao
 import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.model.CategoryName
-import com.example.tmdb.data.model.MovieResultsDto
 import com.example.tmdb.data.model.MoviesDao
 import com.example.tmdb.data.model.ResultCategories
-import com.example.tmdb.data.model.ResultMoviesList
-import com.example.tmdb.data.model.SeriesResultsDto
+import com.example.tmdb.data.model.ResultCategory
+import com.example.tmdb.data.model.ResultsDto
 import com.example.tmdb.data.model.TRENDING_MOVIES_ID
 import com.example.tmdb.data.model.TRENDING_SERIES_ID
 import com.example.tmdb.data.model.UPCOMING_MOVIES_ID
@@ -47,45 +46,25 @@ class CategoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun <T> processApiResult(result: Result<T>): ResultMoviesList {
-        return if (result.isSuccess()) {
-            val movieList = when (val data = result.asSuccess().value) {
-                is MovieResultsDto -> data.result.moviesDtoListToMovieList()
-                is SeriesResultsDto -> data.result.seriesDtoListToMovieList()
-                else -> null
-            }
-            ResultMoviesList(movieList, null)
-        } else {
-            ResultMoviesList(null, result.asFailure())
-        }
-    }
-
-    private suspend fun getMoviesListAsync(id: Int): Deferred<ResultMoviesList> = coroutineScope {
-        when (id) {
-            TRENDING_MOVIES_ID -> async {
-                val result = api.getTrendingMoviesList()
-                processApiResult(result)
+    private suspend fun getMoviesListAsync(id: Int): Result<ResultsDto>? {
+        return when (id) {
+            TRENDING_MOVIES_ID -> {
+                api.getTrendingMoviesList()
             }
 
-            TRENDING_SERIES_ID -> async {
-                val result = api.getTrendingSeriesList()
-                processApiResult(result)
+            TRENDING_SERIES_ID -> {
+                api.getTrendingSeriesList()
             }
 
-            UPCOMING_MOVIES_ID -> async {
-                val result = api.getUpcomingMoviesList(1)
-                processApiResult(result)
+            UPCOMING_MOVIES_ID -> {
+                api.getUpcomingMoviesList(1)
             }
 
-            UPCOMING_SERIES_ID -> async {
-                val result = api.getUpcomingSeriesList(1)
-                processApiResult(result)
+            UPCOMING_SERIES_ID -> {
+                api.getUpcomingSeriesList(1)
             }
-
             else -> {
-                async {
-                    ResultMoviesList(null, null)
-                }
+                null
             }
         }
     }
@@ -93,21 +72,37 @@ class CategoriesRepositoryImpl @Inject constructor(
     private suspend fun updateCategoriesDB(errorsFlow: MutableStateFlow<Result.Failure<*>?>) {
         val categoriesNames: List<CategoryName> =
             categoriesDao.getAllCategoryNames().toCategoryNamesList()
-        var moviesListError: Result.Failure<*>? = null
-        val categoriesList = categoriesNames.mapNotNull { categoryName ->
-            val resultMoviesList = getMoviesListAsync(categoryName.id).await()
-            if (resultMoviesList.error != null) {
-                if (moviesListError != Result.Failure.OtherError())
-                    moviesListError = resultMoviesList.error
-            }
-            if (resultMoviesList.moviesList != null) {
-                Category(categoryName, resultMoviesList.moviesList)
-            } else {
-                null
+        val deferredResults: List<Deferred<ResultCategory?>> = coroutineScope {
+            categoriesNames.map { categoryName ->
+                async {
+                    ResultCategory(getMoviesListAsync(categoryName.id), categoryName)
+                }
             }
         }
-        errorsFlow.emit(moviesListError)
-        moviesDao.saveMoviesAndDependencies(categoriesList)
+        val results: List<ResultCategory?> = deferredResults.map { result -> result.await() }
+        var categoriesList: MutableList<Category>? = mutableListOf()
+        for (result in results) {
+            if (result?.result != null) {
+                if (result.result.isSuccess()) {
+                    val movieList = when (val data = result.result.asSuccess().value) {
+                        is ResultsDto.MovieResults -> data.result.moviesDtoListToMovieList()
+                        is ResultsDto.SeriesResults -> data.result.seriesDtoListToMovieList()
+                    }
+                    categoriesList?.add(Category(result.categoryName, movieList))
+                } else {
+                    errorsFlow.emit(result.result.asFailure())
+                    categoriesList = null
+                    break
+                }
+            } else {
+                categoriesList = null
+                break
+            }
+        }
+        if (categoriesList != null) {
+            moviesDao.saveMoviesAndDependencies(categoriesList)
+            errorsFlow.emit(null)
+        }
     }
 
     private fun getCategoriesFromDB(): Flow<List<Category>> {

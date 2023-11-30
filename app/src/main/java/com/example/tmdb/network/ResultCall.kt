@@ -27,18 +27,18 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
                 if (body != null) {
                     Result.Success(body)
                 } else {
-                    Result.Failure.OtherError()
+                    Result.Failure.OtherError
                 }
             } else {
-                Result.Failure.NetworkError()
+                Result.Failure.NetworkError
             }
             callback.onResponse(proxy, Response.success(result))
         }
 
         override fun onFailure(call: Call<T>, error: Throwable) {
             val result = when (error) {
-                is IOException -> Result.Failure.NetworkError()
-                else -> Result.Failure.OtherError()
+                is IOException -> Result.Failure.NetworkError
+                else -> Result.Failure.OtherError
             }
 
             callback.onResponse(proxy, Response.success(result))

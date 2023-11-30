@@ -4,10 +4,10 @@ sealed class Result<out T> {
 
     data class Success<T>(val value: T) : Result<T>()
 
-    sealed class Failure<E : Throwable>(open val error: E? = null) : Result<Nothing>() {
+    sealed class Failure<E : Throwable> : Result<Nothing>() {
 
-        class OtherError : Failure<Throwable>()
+        data object OtherError : Failure<Throwable>()
 
-        class NetworkError : Failure<HttpException>()
+        data object NetworkError : Failure<HttpException>()
     }
 }

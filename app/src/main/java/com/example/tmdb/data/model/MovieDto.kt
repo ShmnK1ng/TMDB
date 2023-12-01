@@ -12,8 +12,3 @@ data class MovieDto(
     @Json(name = "poster_path")
     val posterPath: String?,
 )
-
-data class MovieResultsDto(
-    @Json(name = "results")
-    val result: List<MovieDto>
-)

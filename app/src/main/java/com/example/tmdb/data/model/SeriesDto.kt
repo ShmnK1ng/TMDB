@@ -12,8 +12,3 @@ data class SeriesDto(
     @Json(name = "poster_path")
     val posterPath: String?,
 )
-
-data class SeriesResultsDto(
-    @Json(name = "results")
-    val result: List<SeriesDto>
-)

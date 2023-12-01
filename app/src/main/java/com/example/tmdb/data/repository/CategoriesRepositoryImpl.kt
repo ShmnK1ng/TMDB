@@ -24,6 +24,7 @@ import com.example.tmdb.network.asSuccess
 import com.example.tmdb.network.isSuccess
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,62 +47,36 @@ class CategoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun getMoviesListAsync(id: Int): Result<ResultsDto>? {
+    private suspend fun getMoviesListAsync(id: Int): Result<ResultsDto> {
         return when (id) {
-            TRENDING_MOVIES_ID -> {
-                api.getTrendingMoviesList()
-            }
-
-            TRENDING_SERIES_ID -> {
-                api.getTrendingSeriesList()
-            }
-
-            UPCOMING_MOVIES_ID -> {
-                api.getUpcomingMoviesList(1)
-            }
-
-            UPCOMING_SERIES_ID -> {
-                api.getUpcomingSeriesList(1)
-            }
-            else -> {
-                null
-            }
+            TRENDING_MOVIES_ID -> api.getTrendingMoviesList()
+            TRENDING_SERIES_ID -> api.getTrendingSeriesList()
+            UPCOMING_MOVIES_ID -> api.getUpcomingMoviesList(1)
+            UPCOMING_SERIES_ID -> api.getUpcomingSeriesList(1)
+            else -> throw IllegalArgumentException("Unknown category!")
         }
     }
 
     private suspend fun updateCategoriesDB(errorsFlow: MutableStateFlow<Result.Failure<*>?>) {
-        val categoriesNames: List<CategoryName> =
-            categoriesDao.getAllCategoryNames().toCategoryNamesList()
-        val deferredResults: List<Deferred<ResultCategory?>> = coroutineScope {
+        val categoriesNames: List<CategoryName> = categoriesDao.getAllCategoryNames().toCategoryNamesList()
+        val deferredResults: List<Deferred<ResultCategory>> = coroutineScope {
             categoriesNames.map { categoryName ->
-                async {
-                    ResultCategory(getMoviesListAsync(categoryName.id), categoryName)
-                }
+                async { ResultCategory(getMoviesListAsync(categoryName.id), categoryName) }
             }
         }
-        val results: List<ResultCategory?> = deferredResults.map { result -> result.await() }
-        var categoriesList: MutableList<Category>? = mutableListOf()
-        for (result in results) {
-            if (result?.result != null) {
-                if (result.result.isSuccess()) {
-                    val movieList = when (val data = result.result.asSuccess().value) {
-                        is ResultsDto.MovieResults -> data.result.moviesDtoListToMovieList()
-                        is ResultsDto.SeriesResults -> data.result.seriesDtoListToMovieList()
-                    }
-                    categoriesList?.add(Category(result.categoryName, movieList))
-                } else {
-                    errorsFlow.emit(result.result.asFailure())
-                    categoriesList = null
-                    break
+        val results = awaitAll(*deferredResults.toTypedArray())
+        val error = results.firstOrNull { !it.result.isSuccess() }?.result?.asFailure()
+        if (error != null) {
+            errorsFlow.emit(error)
+        } else {
+            val categoriesList = results.map {
+                val movieList = when (val data = it.result.asSuccess().value) {
+                    is ResultsDto.MovieResults -> data.result.moviesDtoListToMovieList()
+                    is ResultsDto.SeriesResults -> data.result.seriesDtoListToMovieList()
                 }
-            } else {
-                categoriesList = null
-                break
+                Category(it.categoryName, movieList)
             }
-        }
-        if (categoriesList != null) {
             moviesDao.saveMoviesAndDependencies(categoriesList)
-            errorsFlow.emit(null)
         }
     }
 

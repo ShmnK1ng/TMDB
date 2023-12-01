@@ -25,6 +25,7 @@ class HomeFragmentViewModel @Inject constructor(
     val goToMovieOverview: Flow<Movie?> = _goToMovieOverview.asStateFlow()
     private val _showError: MutableStateFlow<Result.Failure<*>?> = MutableStateFlow(null)
     val showError: Flow<Result.Failure<*>?> = _showError.asStateFlow()
+    private var lastError: Result.Failure<*>? = null
 
     fun onMovieItemClicked(movie: Movie) {
         _goToMovieOverview.value = movie
@@ -41,7 +42,8 @@ class HomeFragmentViewModel @Inject constructor(
     init {
         getCategoriesUseCase.getCategories()
             .onEach { resultCategories ->
-                if (resultCategories.error != null) {
+                if (lastError == null) {
+                    lastError = resultCategories.error
                     _showError.value = resultCategories.error
                 }
                 _categories.value = resultCategories.listCategories

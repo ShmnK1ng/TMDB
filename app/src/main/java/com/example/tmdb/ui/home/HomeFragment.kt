@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun showToast(error: Result.Failure<*>) {
+    private fun showToast(error: Result.Failure) {
         when (error) {
             is Result.Failure.NetworkError -> Toast.makeText(
                 requireContext(),

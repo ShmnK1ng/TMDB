@@ -8,6 +8,6 @@ fun <T> Result<T>.asSuccess(): Result.Success<T> {
     return this as Result.Success<T>
 }
 
-fun <T> Result<T>.asFailure(): Result.Failure<*> {
-    return this as Result.Failure<*>
+fun <T> Result<T>.asFailure(): Result.Failure {
+    return this as Result.Failure
 }

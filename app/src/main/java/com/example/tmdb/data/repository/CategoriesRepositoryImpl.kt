@@ -40,7 +40,7 @@ class CategoriesRepositoryImpl @Inject constructor(
 ) : CategoriesRepository {
 
     override fun getCategories(): Flow<ResultCategories> {
-        val errorsFlow: MutableStateFlow<Result.Failure<*>?> = MutableStateFlow(null)
+        val errorsFlow: MutableStateFlow<Result.Failure?> = MutableStateFlow(null)
         taskManager.startTask { updateCategoriesDB(errorsFlow) }
         return getCategoriesFromDB().combine(errorsFlow) { categoriesList, error ->
             ResultCategories(categoriesList, error)
@@ -57,7 +57,7 @@ class CategoriesRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun updateCategoriesDB(errorsFlow: MutableStateFlow<Result.Failure<*>?>) {
+    private suspend fun updateCategoriesDB(errorsFlow: MutableStateFlow<Result.Failure?>) {
         val categoriesNames: List<CategoryName> = categoriesDao.getAllCategoryNames().toCategoryNamesList()
         val deferredResults: List<Deferred<ResultCategory>> = coroutineScope {
             categoriesNames.map { categoryName ->

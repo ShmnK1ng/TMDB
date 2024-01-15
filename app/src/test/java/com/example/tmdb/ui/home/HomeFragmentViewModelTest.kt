@@ -1,10 +1,12 @@
 package com.example.tmdb.ui.home
 
+import androidx.lifecycle.viewModelScope
 import com.example.tmdb.MainCoroutineRule
-import com.example.tmdb.collectInViewModelScope
+import com.example.tmdb.collectForTest
 import com.example.tmdb.data.model.Category
 import com.example.tmdb.data.model.CategoryName
 import com.example.tmdb.data.model.Movie
+import com.example.tmdb.data.model.ResultCategories
 import com.example.tmdb.data.model.Type
 import com.example.tmdb.data.usecase.FakeGetCategoriesUseCase
 import com.example.tmdb.network.Result
@@ -22,16 +24,23 @@ class HomeFragmentViewModelTest {
 
     private lateinit var viewModel: HomeFragmentViewModel
 
+    private val result =  ResultCategories(
+        listOf(
+            Category(CategoryName(1, 1), listOf(Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)))
+        ), Result.Failure.NetworkError
+    )
+
     @Before
     fun setupViewModel() {
-        viewModel = HomeFragmentViewModel(FakeGetCategoriesUseCase())
+
+        viewModel = HomeFragmentViewModel(FakeGetCategoriesUseCase(result))
     }
 
     @Test
     fun `should open MovieOverview in case of list item click`() {
         val movie1 = Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)
         val movie2 = Movie(0, "remoteId", "Title2", 0.0, "posterPath", Type.Series)
-        val result = viewModel.goToMovieOverview.collectInViewModelScope(viewModel) {
+        val result = viewModel.goToMovieOverview.collectForTest(viewModel.viewModelScope) {
             viewModel.onMovieItemClicked(movie1)
             viewModel.onMovieItemClicked(movie2)
             viewModel.resetClickState()
@@ -41,16 +50,16 @@ class HomeFragmentViewModelTest {
 
     @Test
     fun `should show error in case of an error`() {
-        val result = viewModel.showError.collectInViewModelScope(viewModel) {
+        val actualResult = viewModel.showError.collectForTest(viewModel.viewModelScope) {
             viewModel.resetErrorState()
         }
-        assertEquals(listOf(Result.Failure.NetworkError, null), result)
+        assertEquals(listOf(Result.Failure.NetworkError, null), actualResult)
     }
 
     @Test
-    fun `should show list of categories in case of receiving it`() {
-        val listCategories = listOf(listOf(Category(CategoryName(1, 1), listOf(Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)))))
-        val result = viewModel.categories.collectInViewModelScope(viewModel)
-        assertEquals(listCategories, result)
+    fun `should show list of categories`() {
+        val expectedResult = listOf(result.listCategories)
+        val actualResult = viewModel.categories.collectForTest(viewModel.viewModelScope)
+        assertEquals(expectedResult, actualResult)
     }
 }

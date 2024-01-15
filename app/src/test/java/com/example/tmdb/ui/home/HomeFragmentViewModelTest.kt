@@ -8,7 +8,7 @@ import com.example.tmdb.data.model.CategoryName
 import com.example.tmdb.data.model.Movie
 import com.example.tmdb.data.model.ResultCategories
 import com.example.tmdb.data.model.Type
-import com.example.tmdb.data.usecase.FakeGetCategoriesUseCase
+import com.example.tmdb.data.usecase.GetCategoriesUseCaseStub
 import com.example.tmdb.network.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
@@ -24,16 +24,11 @@ class HomeFragmentViewModelTest {
 
     private lateinit var viewModel: HomeFragmentViewModel
 
-    private val result =  ResultCategories(
-        listOf(
-            Category(CategoryName(1, 1), listOf(Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)))
-        ), Result.Failure.NetworkError
-    )
+    private val getCategoriesUseCaseStub = GetCategoriesUseCaseStub()
 
     @Before
     fun setupViewModel() {
-
-        viewModel = HomeFragmentViewModel(FakeGetCategoriesUseCase(result))
+        viewModel = HomeFragmentViewModel(getCategoriesUseCaseStub)
     }
 
     @Test
@@ -49,17 +44,54 @@ class HomeFragmentViewModelTest {
     }
 
     @Test
-    fun `should show error in case of an error`() {
+    fun `should return network error and empty list of categories`() {
+        getCategoriesUseCaseStub.setResult(ResultCategories(emptyList(), Result.Failure.NetworkError))
         val actualResult = viewModel.showError.collectForTest(viewModel.viewModelScope) {
             viewModel.resetErrorState()
         }
         assertEquals(listOf(Result.Failure.NetworkError, null), actualResult)
+        val actualCategoriesList = viewModel.categories.collectForTest(viewModel.viewModelScope)
+        assertEquals(listOf(emptyList<Category>()), actualCategoriesList)
     }
 
     @Test
-    fun `should show list of categories`() {
+    fun `should return other error and empty list of categories`() {
+        getCategoriesUseCaseStub.setResult(ResultCategories(emptyList(), Result.Failure.OtherError))
+        val actualResult = viewModel.showError.collectForTest(viewModel.viewModelScope) {
+            viewModel.resetErrorState()
+        }
+        assertEquals(listOf(Result.Failure.OtherError, null), actualResult)
+        val actualCategoriesList = viewModel.categories.collectForTest(viewModel.viewModelScope)
+        assertEquals(listOf(emptyList<Category>()), actualCategoriesList)
+    }
+
+    @Test
+    fun `should return list of categories and null from errors`() {
+        val result = ResultCategories(
+            listOf(
+                Category(CategoryName(1, 1), listOf(Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)))
+            ), null
+        )
+        getCategoriesUseCaseStub.setResult(result)
         val expectedResult = listOf(result.listCategories)
         val actualResult = viewModel.categories.collectForTest(viewModel.viewModelScope)
         assertEquals(expectedResult, actualResult)
+        val actualErrorResult = viewModel.showError.collectForTest(viewModel.viewModelScope)
+        assertEquals(listOf(null), actualErrorResult)
+    }
+
+    @Test
+    fun `should return list of categories and network error`() {
+        val result = ResultCategories(
+            listOf(
+                Category(CategoryName(1, 1), listOf(Movie(0, "remoteId", "Title1", 0.0, "posterPath", Type.Series)))
+            ), Result.Failure.NetworkError
+        )
+        getCategoriesUseCaseStub.setResult(result)
+        val expectedResult = listOf(result.listCategories)
+        val actualResult = viewModel.categories.collectForTest(viewModel.viewModelScope)
+        assertEquals(expectedResult, actualResult)
+        val actualErrorResult = viewModel.showError.collectForTest(viewModel.viewModelScope)
+        assertEquals(listOf(Result.Failure.NetworkError), actualErrorResult)
     }
 }

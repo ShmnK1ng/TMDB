@@ -2,7 +2,7 @@ package com.example.tmdb.data.model
 
 import kotlinx.coroutines.flow.Flow
 
-class FakeCategoriesDao(private val moviesDao: FakeMoviesDao) : CategoriesDao {
+class CategoriesDaoStub(private val moviesDao: MoviesDaoStub) : CategoriesDao {
 
 
     override suspend fun getAllCategoryNames(): List<CategoryEntity> {

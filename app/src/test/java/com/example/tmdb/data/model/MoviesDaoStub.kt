@@ -3,10 +3,9 @@ package com.example.tmdb.data.model
 import kotlinx.coroutines.flow.MutableStateFlow
 
 
-class FakeMoviesDao : MoviesDao() {
+class MoviesDaoStub(private val savedListOfCategoriesAndMovies: List<CategoryAndMovies>) : MoviesDao() {
 
     val flow: MutableStateFlow<List<CategoryAndMovies>> = MutableStateFlow(listOf())
-    private val testMovieEntity = MovieEntity(1, "TestId", "Test", 0.0, "Test", Type.Movies)
 
     override suspend fun saveMovie(movieEntity: MovieEntity): Long {
         return 1
@@ -30,11 +29,7 @@ class FakeMoviesDao : MoviesDao() {
 
      override suspend fun saveMoviesAndDependencies(categoriesList: List<Category>?) {
         flow.emit(
-            listOf(
-                CategoryAndMovies(
-                    CategoryEntity(1, 1), listOf(testMovieEntity)
-                )
-            )
+            savedListOfCategoriesAndMovies
         )
     }
 }
